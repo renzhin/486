@@ -1,5 +1,11 @@
 <!-- header.html -->
 <header>
-    <p>Место для логотипа</p>
-    <nav>Навигация</nav>
+  <p>Место для логотипа</p>
+  <nav>
+    <ul>
+      <li><a href="{% url 'cpus:index' %}">Главная</a></li>
+      <li><a href="{% url 'cpus:cpus_list' %}">Каталог</a></li>
+      <li><a href="{% url 'cpus:about' %}">О проекте</a></li>
+    </ul>
+  </nav>
 </header> 
