@@ -1,0 +1,51 @@
+<!-- header.html -->
+{% load static %}
+{% with request.resolver_match.view_name as view_name %}
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    <div class="container">
+      <div 
+        class="navbar-toggler" 
+        type="button" 
+        data-toggle="collapse" 
+        data-target="#navbarNav" 
+        aria-controls="navbarNav" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation"
+        >
+        <span class="navbar-toggler-icon"></span>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNav"> 
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link {% if view_name == 'cpus:index' %}active{% endif %}"
+              href="{% url 'cpus:index' %}">
+              Главная
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if view_name == 'cpus:cpus_list' %}active{% endif %}"
+              href="{% url 'cpus:cpus_list' %}">
+              Каталог
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if view_name == 'cpus:about' %}active{% endif %}"
+              href="{% url 'cpus:about' %}">
+              О проекте
+            </a>
+          </li>
+        </ul>
+      </div>
+      <a class="navbar-brand" href="{% url 'cpus:index' %}">
+        <img
+          src="{% static 'img/logo.png' %}"
+          height="60"
+          class="d-inline-block align-top"
+          alt="Коллекционер 486"
+        >
+      </a>
+    </div>
+  </nav>
+</header> 
+{% endwith %}
