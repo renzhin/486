@@ -1,0 +1,12 @@
+<div class="card" style="width: 40rem;"> 
+    <div class="card-body"> 
+      <h5 class="card-title">{{ cpu.part_number }}</h5> 
+      <h6 class="card-subtitle mb-2 text-muted"> 
+        <small> 
+          От автора @{{ cpu.user.username }} 
+        </small> 
+      </h6> 
+      <p class="card-text">{{ cpu.description|truncatewords:10 }}</p> 
+      <a href="{% url 'cpus:cpu_detail' cpu.id %}" class="card-link">Читать полный текст</a> 
+    </div> 
+  </div> 

@@ -3,4 +3,9 @@
 {% block title %}Коллекция 486. Каталог.{% endblock %}
 {% block content %}
   <h1>Перечень коллекции</h1>
+  {% for cpu in cpus_list %} 
+  <article class="mb-5">   
+    {% include "includes/cpu_card.html" %} 
+  </article>    
+{% endfor %} 
 {% endblock %}
