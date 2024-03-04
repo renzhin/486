@@ -146,13 +146,13 @@ class Cpu(BaseModel):
         blank=True,
         null=True,
     )
-    vcore = models.PositiveIntegerField(
+    vcore = models.FloatField(
         validators=[MinValueValidator(1)],
         verbose_name='напряжение ядра',
         blank=True,
         null=True,
     )
-    overclk_vcore = models.PositiveIntegerField(
+    overclk_vcore = models.FloatField(
         validators=[MinValueValidator(1)],
         verbose_name='напряжение ядра в разгоне',
         blank=True,
@@ -175,7 +175,7 @@ class Cpu(BaseModel):
     )
     sale_price = models.PositiveIntegerField(
         validators=[MinValueValidator(1)],
-        verbose_name='Стоимость покупки',
+        verbose_name='Стоимость продажи',
         blank=True,
         null=True,
     )
@@ -183,6 +183,11 @@ class Cpu(BaseModel):
         blank=True,
         null=True,
         verbose_name='Описание покупки/продажи'
+    )
+    image = models.ImageField(
+        upload_to='cpus/',
+        blank=True,
+        null=True,
     )
 
     class Meta:

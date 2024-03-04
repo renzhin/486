@@ -22,7 +22,6 @@ ALLOWED_HOSTS = os.getenv(
     'ALLOW_HOSTS', default='127.0.0.1'
 ).split()
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -105,7 +104,7 @@ AUTH_USER_MODEL = 'users.ModifiedUser'
 
 LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -123,6 +122,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
