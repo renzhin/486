@@ -1,6 +1,43 @@
 <!-- cpu_detail.html --> 
 {% extends "base.html" %}
-{% block title %}Коллекция 486. Каталог. CPU такой-то{% endblock %}
+{% block title %}
+  Процессор {{ cpu.part_number }}
+  в коллекции {{ cpu.user.username }}
+{% endblock %}
 {% block content %}
-  <h1>CPU такой-то</h1>
+  <div class="col d-flex justify-content-center"> 
+    <div class="card" style="width: 90%;"> 
+      <div class="card-body"> 
+        <h1>
+          Процессор {{ cpu.part_number }}
+        </h1>
+        <h3>Коллекционер: {{ cpu.user.first_name }} {{ cpu.user.last_name }}</h3>
+        <p>Описание: {{ cpu.description }}</p>
+        <p>Статус: {{ cpu.work_status }}</p>
+        <p>Редкость: {{ cpu.rarity }}</p>
+        <p>Производитель: {{ cpu.manufacturer }}</p>
+        <p>Семейство: {{ cpu.family }}</p>
+        <p>Частота: {{ cpu.frequency }} Мгц</p>
+        <p>Частота в разгоне:{{ cpu.overclk_frequency }} Мгц</p>
+        <p>Частота шины: {{ cpu.fsb }} Мгц</p>
+        <p>Частота шины в разгоне: {{ cpu.fsb }} Мгц</p>
+        <p>Множитель: {{ cpu.multiplier }}</p>
+        <p>Множитель в разгоне: {{ cpu.overclk_multiplier }}</p>
+        <p>Наличие сопроцессора: {{ cpu.fpu }}</p>
+        <p>Кэш L1: {{ cpu.l1_cache_size }}</p>
+        <p>Напряжение ядра: {{ cpu.vcore }}</p>
+        <p>Напряжение ядра в разгоне: {{ cpu.overclk_vcore }}</p>
+        <p>Дата покупки: {{ cpu.purchase_date }}</p>
+        <p>Стоимость покупки: {{ cpu.purchase_price }}</p>
+        <p>Дата продажи: {{ cpu.purchase_date }}</p>
+        <p>Стоимость продажи: {{ cpu.purchase_price }}</p>
+        {% if cpu.image %}
+          <a href="{{ cpu.image.url }}" target="_blank"> 
+            <img style="width: 40rem;" class="border-3 rounded img-fluid img-thumbnail mb-2 mx-auto d-block" src="{{ cpu.image.url }}"> 
+          </a>
+        {% endif %}
+        <p>{{ cpu.image }}</p>
+      </div> 
+    </div> 
+  </div> 
 {% endblock %}

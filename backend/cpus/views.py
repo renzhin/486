@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from cpus.models import Cpu
 
@@ -23,5 +23,11 @@ def cpus_list(request):
 
 
 def cpu_detail(request, pk):
+    cpu = get_object_or_404(
+        Cpu,
+        id=pk,
+    )
+    context = {'cpu': cpu}
+
     template_name = 'cpus/cpu_detail.html'
-    return render(request, template_name)
+    return render(request, template_name, context)
