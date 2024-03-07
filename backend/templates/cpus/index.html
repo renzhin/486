@@ -3,4 +3,10 @@
 {% block title %}Коллекция 486. Главная страница.{% endblock %}
 {% block content %}
   <h1>Коллекция процессоров 486 поколения. Главная страница.</h1>
+  Колекционеры на проекте:
+  {% for user in users_list %} 
+    <article class="mb-5">   
+      {% include "includes/user_card.html" %} 
+    </article>    
+  {% endfor %} 
 {% endblock %}

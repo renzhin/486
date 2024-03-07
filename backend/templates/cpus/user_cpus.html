@@ -1,0 +1,11 @@
+<!-- user_cpus.html --> 
+{% extends "base.html" %}
+{% block title %}{{ user.first_name }} {{ user.last_name }}. Коллекция процессоров.{% endblock %}
+{% block content %}
+  <h1>{{ user.first_name }} {{ user.last_name }}. Коллекция процессоров.</h1>
+  {% for cpu in cpus_list %} 
+  <article class="mb-5">   
+    {% include "includes/cpu_card.html" %} 
+  </article>    
+{% endfor %} 
+{% endblock %}

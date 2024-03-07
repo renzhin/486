@@ -1,0 +1,8 @@
+<div> 
+  <h5>
+    {{ user.first_name }} {{ user.last_name }} ( @{{ user.username }} ) — {{ user.cpus.count }} процессора
+  </h5>
+  <a class="text-muted" href="{% url 'cpus:user_cpus' user.id %}"> 
+    @{{ user.username }}
+  </a>
+</div>
