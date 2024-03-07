@@ -1,5 +1,53 @@
 [
-    {"email": "goga@gmail.com", "username": "goga", "first_name": "Гога", "last_name": "Питерский", "password": "Qwerty@1Qwerty@1"},
-    {"email": "buba@gmail.com", "username": "buba", "first_name": "Буба", "last_name": "Касторский", "password": "Qwerty@1Qwerty@1"},
-    {"email": "zhora@gmail.com", "username": "zhora", "first_name": "Жора", "last_name": "Подольский", "password": "Qwerty@1Qwerty@1"}
+    {
+        "user": "1",
+        "manufacturer": "AMD",
+        "part_number": "1",
+        "description": "1",
+        "work_status": "1",
+        "rarity": "1",
+        "family": "1",
+        "frequency": "1",
+        "fsb": "1", 
+        "multiplier": "1",
+        "fpu": "1",
+        "l1_cache_size": "1",
+        "vcore": "1",
+        "purchase_date": "1",
+        "purchase_price": "1"
+    },
+    {
+        "user": "1",
+        "manufacturer": "AMD",
+        "part_number": "1",
+        "description": "1",
+        "work_status": "1",
+        "rarity": "1",
+        "family": "1",
+        "frequency": "1",
+        "fsb": "1", 
+        "multiplier": "1",
+        "fpu": "1",
+        "l1_cache_size": "1",
+        "vcore": "1",
+        "purchase_date": "1",
+        "purchase_price": "1"
+    },
+    {
+        "user": "1",
+        "manufacturer": "AMD",
+        "part_number": "1",
+        "description": "1",
+        "work_status": "1",
+        "rarity": "1",
+        "family": "1",
+        "frequency": "1",
+        "fsb": "1", 
+        "multiplier": "1",
+        "fpu": "1",
+        "l1_cache_size": "1",
+        "vcore": "1",
+        "purchase_date": "1",
+        "purchase_price": "1"
+    }
 ]
