@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 
 from cpus.models import Cpu, User
@@ -5,7 +6,11 @@ from cpus.models import Cpu, User
 
 def index(request):
     template_name = 'cpus/index.html'
-    users_list = User.objects.all()
+    users_list = User.objects.all().annotate(
+        cpu_count=Count('cpus')
+    ).order_by(
+        '-cpu_count'
+    )
     context = {
         'users_list': users_list,
     }

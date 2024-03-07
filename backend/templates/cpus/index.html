@@ -2,8 +2,8 @@
 {% extends "base.html" %}
 {% block title %}Коллекция 486. Главная страница.{% endblock %}
 {% block content %}
-  <h1>Коллекция процессоров 486 поколения. Главная страница.</h1>
-  Колекционеры на проекте:
+  <h1>Уголок коллекционера</h1>
+  Топ коллекционеров:
   {% for user in users_list %} 
     <article class="mb-5">   
       {% include "includes/user_card.html" %} 
