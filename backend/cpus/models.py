@@ -3,8 +3,8 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from cpu_backend.constants import (
-    NAME_LONG_NUMBCHAR,
     NAME_SHORT_NUMBCHAR,
+    CHOICE_NUMBCHAR,
 )
 
 User = get_user_model()
@@ -67,30 +67,38 @@ class Cpu(BaseModel):
         (OVERCLOCK, 'Разогнан'),
     ]
 
-    name = models.CharField(
-        max_length=NAME_LONG_NUMBCHAR,
-        verbose_name='название',
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='cpus',
+        verbose_name='Владелец'
     )
+    part_number = models.CharField(
+        max_length=NAME_SHORT_NUMBCHAR,
+        verbose_name='серийный номер',
+    )
+    catalog_number = models.CharField(
+        max_length=4,
+        verbose_name='Номер в коллекции',
+        blank=True
+    )
+
     description = models.TextField(
         blank=True,
         null=True,
         verbose_name='Описание'
     )
     work_status = models.CharField(
-        max_length=2,
+        max_length=CHOICE_NUMBCHAR,
         choices=STATUS_CHOICES,
         default=NOTEST,
         verbose_name='Статус'
     )
     rarity = models.CharField(
-        max_length=2,
+        max_length=CHOICE_NUMBCHAR,
         choices=RARITY_CHOICES,
         default=NONE,
         verbose_name='Редкость'
-    )
-    part_number = models.CharField(
-        max_length=NAME_SHORT_NUMBCHAR,
-        verbose_name='серийный номер',
     )
     manufacturer = models.ForeignKey(
         Manufacturer,
@@ -106,33 +114,15 @@ class Cpu(BaseModel):
         validators=[MinValueValidator(1)],
         verbose_name='частота процессора',
     )
-    overclk_frequency = models.PositiveIntegerField(
-        validators=[MinValueValidator(1)],
-        verbose_name='частота в разгоне',
-        blank=True,
-        null=True,
-    )
     fsb = models.PositiveIntegerField(
         validators=[MinValueValidator(1)],
         verbose_name='частота шины',
         blank=True,
         null=True,
     )
-    overclk_fsb = models.PositiveIntegerField(
-        validators=[MinValueValidator(1)],
-        verbose_name='частота шины в разгоне',
-        blank=True,
-        null=True,
-    )
     multiplier = models.PositiveIntegerField(
         validators=[MinValueValidator(1)],
         verbose_name='множитель',
-        blank=True,
-        null=True,
-    )
-    overclk_multiplier = models.PositiveIntegerField(
-        validators=[MinValueValidator(1)],
-        verbose_name='множитель в разгоне',
         blank=True,
         null=True,
     )
@@ -152,18 +142,32 @@ class Cpu(BaseModel):
         blank=True,
         null=True,
     )
+
+    overclk_frequency = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)],
+        verbose_name='частота в разгоне',
+        blank=True,
+        null=True,
+    )
+    overclk_fsb = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)],
+        verbose_name='частота шины в разгоне',
+        blank=True,
+        null=True,
+    )
+    overclk_multiplier = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)],
+        verbose_name='множитель в разгоне',
+        blank=True,
+        null=True,
+    )
     overclk_vcore = models.FloatField(
         validators=[MinValueValidator(1)],
         verbose_name='напряжение ядра в разгоне',
         blank=True,
         null=True,
     )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='cpus',
-        verbose_name='Владелец'
-    )
+
     purchase_date = models.DateTimeField(
         verbose_name='дата покупки'
     )
@@ -179,11 +183,12 @@ class Cpu(BaseModel):
         blank=True,
         null=True,
     )
-    price_description = models.TextField(
+    sale_date = models.DateTimeField(
+        verbose_name='дата продажи',
         blank=True,
         null=True,
-        verbose_name='Описание покупки/продажи'
     )
+
     image = models.ImageField(
         upload_to='cpus/',
         blank=True,
@@ -196,12 +201,12 @@ class Cpu(BaseModel):
         constraints = (
             models.UniqueConstraint(
                 fields=(
-                    'name',
-                    'manufacturer'
+                    'catalog_number',
+                    'user'
                 ),
                 name='uniq_cpu'
             ),
         )
 
     def __str__(self):
-        return self.name
+        return self.part_number
