@@ -15,6 +15,8 @@ class ManufacturerAdmin(admin.ModelAdmin):
 class CpuAdmin(admin.ModelAdmin):
     list_display = (
         'part_number',
+        'catalog_number',
         'work_status',
         'purchase_date',
     )
+    readonly_fields = ('catalog_number',)

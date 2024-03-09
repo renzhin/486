@@ -23,6 +23,7 @@ class Command(BaseCommand):
         ) as file:
             users_data = json.load(file)
             for item in users_data:
+                # Проверяем, существует ли пользователь базе
                 existing_user = User.objects.filter(
                     Q(email=item['email']) |
                     Q(username=item['username'])

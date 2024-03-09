@@ -168,7 +168,7 @@ class Cpu(BaseModel):
         null=True,
     )
 
-    purchase_date = models.DateTimeField(
+    purchase_date = models.DateField(
         verbose_name='дата покупки'
     )
     purchase_price = models.PositiveIntegerField(
@@ -183,7 +183,7 @@ class Cpu(BaseModel):
         blank=True,
         null=True,
     )
-    sale_date = models.DateTimeField(
+    sale_date = models.DateField(
         verbose_name='дата продажи',
         blank=True,
         null=True,
