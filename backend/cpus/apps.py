@@ -7,4 +7,4 @@ class CpusConfig(AppConfig):
     verbose_name = 'Процессоры'
 
     def ready(self):
-        import cpus.signals
+        import cpus.signals # noqa
