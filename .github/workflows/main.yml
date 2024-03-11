@@ -140,6 +140,9 @@ jobs:
         # с которым установлено соединение
         script: |
           cd 486
+          # Выполняем удаление образов
+          sudo docker image rm renzhin/486_backend
+          sudo docker image rm renzhin/486_gateway 
           # Выполняет pull образов с Docker Hub
           sudo docker compose -f docker-compose.production.yml pull
           # Перезапускает все контейнеры в Docker Compose
