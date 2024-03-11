@@ -25,8 +25,8 @@ class Command(BaseCommand):
             for item in users_data:
                 # Проверяем, существует ли пользователь базе
                 existing_user = User.objects.filter(
-                    Q(email=item['email']) |
-                    Q(username=item['username'])
+                    Q(email=item['email'])
+                    | Q(username=item['username'])
                 ).first()
                 if existing_user:
                     self.stdout.write(self.style.WARNING(
