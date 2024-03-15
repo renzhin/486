@@ -1,12 +1,39 @@
-<div class="card" style="width: 40rem;"> 
-    <div class="card-body"> 
-      <h5 class="card-title">{{ cpu.part_number }}</h5> 
-      <h6 class="card-subtitle mb-2 text-muted"> 
-        <small> 
-          От автора @{{ cpu.user.username }} 
-        </small> 
-      </h6> 
-      <p class="card-text">{{ cpu.description|truncatewords:10 }}</p> 
-      <a href="{% url 'cpus:cpu_detail' cpu.id %}" class="card-link">Читать полный текст</a> 
-    </div> 
-  </div> 
+{% load static %}
+<div class="col-xl-4 col-md-6 col-sm-12 mt-4">
+  <div class="product-card">
+    <div class="product-thumb card">
+      <a href="{% url 'cpus:cpu_detail' cpu.id %}">
+        {% if cpu.image %}
+          <img src="{{ cpu.image.url }}"> 
+        {% else %}
+          <img src="{% static 'img/nocpu.jpg' %}">
+        {% endif %}
+      </a>
+      <div class="card-img-overlay">
+        <div class=" d-flex justify-content-between">
+          <span class="badge rounded-pill bg-danger text-bg-primary">
+            {{ cpu.rarity }}
+          </span>
+          <span class="badge rounded-pill bg-success text-bg-primary">
+            {{ cpu.work_status }}
+          </span>
+      </div>
+      </div>
+    </div>
+    <div class="product-details">
+      <div class="product-main-details">
+        <h4><a href="{% url 'cpus:cpu_detail' cpu.id %}">{{ cpu.part_number }} <span class="badge bg-secondary text-bg-secondary">New</span></a></h4>
+        <h6>В коллекции</strong> <a href="{% url 'cpus:user_cpus' user.id %}"><span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></a> с {{ cpu.purchase_date }}</h6>
+        <div class="about"><span class="product-list">Производитель:</span> {{ cpu.manufacturer }}</div>
+        <div class="about"><span class="product-list">Частота:</span> {{ cpu.frequency }} Мгц</div>
+      </div>
+      <div class="product-bottom-details d-flex justify-content-between">
+        <div class="product-fav">
+        </div>
+        <div class="product-links">
+          <a href="{% url 'cpus:cpu_detail' cpu.id %}"><button type="button" class="btn btn-primary">Подробнее</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  

@@ -1,11 +1,17 @@
 <!-- user_cpus.html --> 
 {% extends "base.html" %}
-{% block title %}{{ user.first_name }} {{ user.last_name }}. Коллекция процессоров.{% endblock %}
+{% block title %}Коллекция процессоров. {{ user.first_name }} {{ user.last_name }}.{% endblock %}
 {% block content %}
-  <h1>{{ user.first_name }} {{ user.last_name }}. Коллекция процессоров.</h1>
-  {% for cpu in cpus_list %} 
-  <article class="mb-5">   
-    {% include "includes/cpu_card.html" %} 
-  </article>    
-{% endfor %} 
+  <!-- Страница каталога -->
+  <section class="main-content">
+    <div class="container">
+      <h1>Коллекция процессоров. {{ user.first_name }} {{ user.last_name }}.</h1>
+      <div class="row">
+        {% for cpu in cpus_list %}
+          <!-- Карточка -->
+          {% include "includes/cpu_card.html" %} 
+        {% endfor %}
+      </div>
+    </div>
+  </section>
 {% endblock %}
