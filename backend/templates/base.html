@@ -1,5 +1,6 @@
 <!-- base.html -->
 {% load static %}
+{% with request.resolver_match.view_name as view_name %}
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -15,6 +16,9 @@
   </head>
   <body>
     {% include "includes/header.html" %}
+    {% if 'cpus:index' == view_name or 'cpus:about' == view_name %}
+      {% include "includes/carousel.html" %}
+    {% endif %}
     <main class="py-4">
       {% block content %}
         Контента пока нет...
@@ -24,4 +28,5 @@
   </body>
   {% include "includes/scripts.html" %}
 </html>
+{% endwith %}
   
