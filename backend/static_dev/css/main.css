@@ -1,0 +1,173 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    font-weight: 400;
+    min-width: 320px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+section {
+    padding: 50px 0;
+}
+
+a {
+    color: #111;
+}
+
+a.hover {
+    color: #d31010;
+}
+
+.navbar-nav .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.top-menu-my li a.active {
+    font-weight: 600;
+
+}
+
+
+.modal-body img {
+    max-width: 100px;
+}
+
+.my-carusel {
+    padding: 0;
+}
+
+.my-carusel .carousel-item {
+ display: flex;
+ max-height: 200px;
+}
+
+.my-carusel .carousel-item img {
+    object-fit: cover;
+   }
+
+.product-card {
+    border: 1px solid #d8d8d8;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+    transition: all .3s;
+}
+
+.product-card:hover {
+    box-shadow: 0 14px 30px -15px rgba(0, 0, 0, 0.75);
+    transition: all .3s;
+}
+
+.product-thumb a {
+    display: flex;
+    max-height: 200px;
+}
+
+.product-thumb img {
+    object-fit: cover;
+}
+
+.product-details {
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.product-details h4 a{
+    font-weight: 700;
+    display: block;
+    height: 40px;
+    overflow: hidden;
+    line-height: 35px;
+    text-decoration: none;
+}
+
+.product-main-details {
+    padding-bottom: 10px;
+}
+
+.product-main-details .about{
+    font-size: 15px;
+    color: #444444;
+}
+
+.product-main-details .product-list {
+    font-weight: 500;
+}
+
+.product-bottom-details {
+    overflow: hidden;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.product-fav {
+    font-size: 20px;
+    color: #ee6e73;
+}
+
+.cpu_header_ico {
+    font-size: 30px;
+    color: #ee6e73;
+}
+
+.cpu_badges {
+    font-size: 22px;
+    padding-bottom: 20px;
+}
+
+.cpu_font_user {
+    font-size: 20px;
+    color: #2c2c2c;
+}
+
+.product-links a {
+    font-size: 20px;
+    margin-left: 10px;
+
+}
+
+.footer {
+    background-color: #343434;
+}
+
+.footer h4 {
+    color: #ccc;
+    font-size: 20px;
+    border-bottom: 1px solid #666;
+    padding-bottom: 3px;
+    display: inline-block;
+}
+
+.footer a {
+    text-decoration: none;
+    transition: all .3s;
+}
+
+.footer-text {
+    color: #7c7c7c;
+    text-align: end;
+    font-size: 12px;
+}
+
+.footer a, footer li {
+    color: #b3afaf;
+}
+
+.footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer li a {
+    display: block;
+}
+
+.footer-icons a {
+    display: inline-block;
+    font-size: 30px;
+    margin-right: 15px;
+}
