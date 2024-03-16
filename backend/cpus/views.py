@@ -1,3 +1,5 @@
+import datetime
+
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 
@@ -11,8 +13,14 @@ def index(request):
     ).order_by(
         '-cpu_count'
     )
+    all_cpus = Cpu.objects.all()
+    month_cpus = Cpu.objects.filter(
+        created_at__month=3
+    )
     context = {
         'users_list': users_list,
+        'all_cpus': all_cpus,
+        'month_cpus': month_cpus,
     }
     return render(request, template_name, context)
 
