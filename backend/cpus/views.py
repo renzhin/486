@@ -14,13 +14,22 @@ def index(request):
         '-cpu_count'
     )
     all_cpus = Cpu.objects.all()
+
+    today = datetime.datetime.today()
+    month = today - datetime.timedelta(days=30)
+
     month_cpus = Cpu.objects.filter(
-        created_at__month=3
+        created_at__range=(month, today)
     )
+    interest_cpus = Cpu.objects.filter(
+        in_interesting=True
+    )
+
     context = {
         'users_list': users_list,
         'all_cpus': all_cpus,
         'month_cpus': month_cpus,
+        'interest_cpus': interest_cpus,
     }
     return render(request, template_name, context)
 

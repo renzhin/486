@@ -195,6 +195,17 @@ class Cpu(BaseModel):
         null=True,
     )
 
+    is_published = models.BooleanField(
+        default=True,
+        verbose_name='Опубликовано',
+        help_text='Снимите галочку, чтобы скрыть публикацию.'
+    )
+    in_interesting = models.BooleanField(
+        default=False,
+        verbose_name='В интересном',
+        help_text='Снимите галочку, чтобы скрыть с главной.'
+    )
+
     class Meta:
         verbose_name = 'процессор'
         verbose_name_plural = 'Процессоры'
