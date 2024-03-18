@@ -3,7 +3,7 @@ import datetime
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 
-from cpus.models import Cpu, User
+from cpus.models import Cpu, ImageCpu, User
 
 
 def index(request):
@@ -53,7 +53,13 @@ def cpu_detail(request, pk):
         Cpu,
         id=pk,
     )
-    context = {'cpu': cpu}
+    cpu_images = ImageCpu.objects.filter(
+        cpu__id=pk
+    )
+    context = {
+        'cpu': cpu,
+        'cpu_images': cpu_images,
+    }
 
     template_name = 'cpus/cpu_detail.html'
     return render(request, template_name, context)

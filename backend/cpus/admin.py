@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import (
     Manufacturer,
     Cpu,
+    ImageCpu
 )
 
 
@@ -11,8 +12,14 @@ class ManufacturerAdmin(admin.ModelAdmin):
     pass
 
 
+class ImageCpuInline(admin.TabularInline):
+    model = ImageCpu
+    extra = 1
+
+
 @admin.register(Cpu)
 class CpuAdmin(admin.ModelAdmin):
+    inlines = [ImageCpuInline]
     list_display = (
         'part_number',
         'catalog_number',
