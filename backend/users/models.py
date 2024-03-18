@@ -24,12 +24,16 @@ class ModifiedUser(AbstractUser):
     )
     last_name = models.CharField(
         max_length=USER_FIELDS_NUMBCHAR,
-        blank=True,
         verbose_name='Фамилия',
     )
     password = models.CharField(
         max_length=USER_FIELDS_NUMBCHAR,
         verbose_name='Пароль',
+    )
+    avatar = models.ImageField(
+        upload_to='users/',
+        blank=True,
+        null=True,
     )
 
     class Meta:

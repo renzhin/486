@@ -88,6 +88,11 @@ class Cpu(BaseModel):
         null=True,
         verbose_name='Описание'
     )
+    hidden_description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name='Скрытое описание'
+    )
     work_status = models.CharField(
         max_length=CHOICE_NUMBCHAR,
         choices=STATUS_CHOICES,
