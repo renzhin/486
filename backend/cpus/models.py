@@ -10,6 +10,11 @@ from cpu_backend.constants import (
 User = get_user_model()
 
 
+def user_directory_path(instance, filename):
+    # файл будет загружен в MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
+
 class BaseModel(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -195,7 +200,7 @@ class Cpu(BaseModel):
     )
 
     image = models.ImageField(
-        upload_to='cpus/',
+        upload_to=user_directory_path,
         blank=True,
         null=True,
     )
