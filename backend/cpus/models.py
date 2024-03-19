@@ -11,7 +11,10 @@ User = get_user_model()
 
 
 def user_cpu_directory_path(instance, filename):
-    # файл будет загружен в MEDIA_ROOT/user_<id>/cpu_<id>/<filename>
+    """
+    Функция для генерации пути сохранения изображений процессоров.
+    Файл будет загружен в MEDIA_ROOT/user_<id>/cpu_<id>/<filename>
+    """
     return 'user_{0}/cpu_{1}/{2}'.format(
         instance.cpu.user.id,
         instance.cpu.id,

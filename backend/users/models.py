@@ -6,7 +6,10 @@ from cpu_backend.constants import USER_FIELDS_NUMBCHAR
 
 
 def user_directory_path(instance, filename):
-    # файл будет загружен в MEDIA_ROOT/user_<id>/<filename>
+    """
+    Функция для генерации пути сохранения изображения аватары.
+    Файл будет загружен в MEDIA_ROOT/user_<id>/<filename>
+    """
     return 'user_{0}/{1}'.format(
         instance.id,
         filename
