@@ -5,6 +5,14 @@ from cpus.validators import username_validator
 from cpu_backend.constants import USER_FIELDS_NUMBCHAR
 
 
+def user_directory_path(instance, filename):
+    # файл будет загружен в MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(
+        instance.id,
+        filename
+    )
+
+
 class ModifiedUser(AbstractUser):
 
     email = models.EmailField(
@@ -31,9 +39,10 @@ class ModifiedUser(AbstractUser):
         verbose_name='Пароль',
     )
     avatar = models.ImageField(
-        upload_to='users/',
+        upload_to=user_directory_path,
         blank=True,
         null=True,
+        verbose_name='Аватар',
     )
 
     class Meta:

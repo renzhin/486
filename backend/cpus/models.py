@@ -10,9 +10,13 @@ from cpu_backend.constants import (
 User = get_user_model()
 
 
-# def user_directory_path(instance, filename):
-#     # файл будет загружен в MEDIA_ROOT/user_<id>/<filename>
-#     return 'user_{0}/{1}'.format(instance.user.id, filename)
+def user_cpu_directory_path(instance, filename):
+    # файл будет загружен в MEDIA_ROOT/user_<id>/cpu_<id>/<filename>
+    return 'user_{0}/cpu_{1}/{2}'.format(
+        instance.cpu.user.id,
+        instance.cpu.id,
+        filename
+    )
 
 
 class BaseModel(models.Model):
@@ -199,12 +203,6 @@ class Cpu(BaseModel):
         null=True,
     )
 
-    # image = models.ImageField(
-    #     upload_to=user_directory_path,
-    #     blank=True,
-    #     null=True,
-    # )
-
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -246,7 +244,11 @@ class ImageCpu(models.Model):
     cpu = models.ForeignKey(
         Cpu,
         on_delete=models.CASCADE,
-        related_name='images'
+        related_name='images',
+        verbose_name='процессор',
     )
-    image = models.ImageField(upload_to='cpus/')
+    image = models.ImageField(
+        upload_to=user_cpu_directory_path,
+        verbose_name='фото процессора',
+    )
     default = models.BooleanField(default=False)
