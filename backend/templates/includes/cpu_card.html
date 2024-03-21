@@ -3,8 +3,8 @@
   <div class="product-card">
     <div class="product-thumb card">
       <a href="{% url 'cpus:cpu_detail' cpu.id %}">
-        {% if cpu.image %}
-          <img src="{{ cpu.image.url }}"> 
+        {% if cpu.images.all %}
+          <img src="{{ cpu.images.first.image.url }}"> 
         {% else %}
           <img src="{% static 'img/nocpu.jpg' %}">
         {% endif %}
@@ -36,4 +36,4 @@
       </div>
     </div>
   </div>
-</div>  
+</div>
