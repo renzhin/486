@@ -92,10 +92,12 @@
         </div>
         <div class="col-xl-6 col-md-5">
 
-          {% if cpu.image %}
-            <a href="{{ cpu.image.url }}" target="_blank"> 
-              <img class="img-fluid img-thumbnail mb-2 mx-auto d-block" src="{{ cpu.image.url }}"> 
-            </a>
+
+          {% if cpu_images %}
+            {% for countimage in cpu_images %}
+            <!-- Карточка -->
+            <a href="{{ countimage.image.url }}" target="_blank"><img src="{{ countimage.image.url }}" class="mt-2 me-1 image-detail-gal" alt=""></a>
+            {% endfor %}
           {% endif %}
 
         </div> 
