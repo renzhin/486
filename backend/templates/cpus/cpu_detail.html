@@ -91,16 +91,18 @@
           </p>
         </div>
         <div class="col-xl-6 col-md-5">
-
-
-          {% if cpu_images %}
-            {% for countimage in cpu_images %}
-            <!-- Карточка -->
-            <a href="{{ countimage.image.url }}" target="_blank"><img src="{{ countimage.image.url }}" class="mt-2 me-1 image-detail-gal" alt=""></a>
-            {% endfor %}
-          {% endif %}
-
-        </div> 
+          {% for countimage in cpu_images %}
+            {% if forloop.first %}
+              <a href="{{ countimage.image.url }}" target="_blank">
+                <img src="{{ countimage.image.url }}">
+              </a>
+            {% else %}
+              <a href="{{ countimage.image.url }}" target="_blank">
+                <img src="{{ countimage.image.url }}" class="mt-2 me-1 image-detail-gal" alt="">
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
     </div>
   </section>
