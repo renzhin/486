@@ -24,7 +24,7 @@
           <ul class="list-unstyled">
             {% for cpu in month_cpus %}
               <!-- Карточка -->
-                <li><a href="{% url 'cpus:cpu_detail' cpu.id %}">{{ cpu.part_number }}</a> <span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></li>
+              {% include "includes/mini_cpu.html" %}  
             {% endfor %}
           </ul>
 
@@ -32,7 +32,7 @@
           <ul class="list-unstyled">
             {% for cpu in interest_cpus %}
               <!-- Карточка -->
-                <li><a href="{% url 'cpus:cpu_detail' cpu.id %}">{{ cpu.part_number }}</a> <span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></li>
+              {% include "includes/mini_cpu.html" %}  
             {% endfor %}
           </ul>
 
