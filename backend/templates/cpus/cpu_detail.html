@@ -14,10 +14,10 @@
           <h2>{{ cpu.part_number }}</h2>
             <div class="cpu_badges">
               <span class="badge rounded-pill bg-danger text-bg-primary">
-                {{ cpu.rarity }}
+                {{ cpu.get_rarity_display }}
               </span>
               <span class="badge rounded-pill bg-success text-bg-primary">
-                {{ cpu.work_status }}
+                {{ cpu.get_work_status_display }}
               </span>
             </div>
           <table class="table table-sm">
