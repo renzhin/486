@@ -1,6 +1,7 @@
 import datetime
 
 from django.db.models import Count
+from django.utils.timezone import make_aware
 from django.shortcuts import get_object_or_404, render
 
 from cpus.models import Cpu, ImageCpu, User
@@ -16,10 +17,11 @@ def index(request):
     all_cpus = Cpu.objects.all()
 
     today = datetime.datetime.today()
-    month = today - datetime.timedelta(days=30)
+    aware_today = make_aware(today)  # Присваиваем тайм зону
+    month = aware_today - datetime.timedelta(days=30)
 
     month_cpus = Cpu.objects.filter(
-        created_at__range=(month, today)
+        created_at__range=(month, aware_today)
     )
     interest_cpus = Cpu.objects.filter(
         in_interesting=True
