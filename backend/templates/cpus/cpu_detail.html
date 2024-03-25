@@ -57,7 +57,7 @@
             </tbody>
           </table>
           <br>
-          <h6 class="cpu_font_user"><span class="badge bg-secondary text-bg-secondary">New</span> В коллекции {{ cpu.user.first_name }} {{ cpu.user.last_name }} </strong> <a href="{% url 'cpus:user_cpus' user.id %}"><span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></a></h6>
+          <h6 class="cpu_font_user"><span class="badge bg-secondary text-bg-secondary">New</span> В коллекции {{ cpu.user.first_name }} {{ cpu.user.last_name }} </strong> <a href="{% url 'cpus:user_cpus' cpu.user.id %}"><span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></a></h6>
           <ul class="list-group">
             <li class="list-group-item">Приобретен {{ cpu.purchase_date }} за {{ cpu.purchase_price }} руб.</li>
             <li class="list-group-item">Продан {{ cpu.purchase_date }} за {{ cpu.purchase_price }} руб.</li>
