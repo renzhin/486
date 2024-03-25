@@ -44,7 +44,7 @@
               </tr>
               <tr>
                 <th scope="row">Сопроцессор</th>
-                <td>{{ cpu.fpu }}</td>
+                <td>{{ cpu.fpu|yesno:"Есть,Отсутствует" }}</td>
               </tr>
               <tr>
                 <th scope="row">Кэш L1</th>
