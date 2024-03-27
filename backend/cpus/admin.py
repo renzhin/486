@@ -7,11 +7,6 @@ from .models import (
 )
 
 
-@admin.register(Manufacturer)
-class ManufacturerAdmin(admin.ModelAdmin):
-    pass
-
-
 class ImageCpuInline(admin.TabularInline):
     model = ImageCpu
     extra = 1
@@ -27,3 +22,8 @@ class CpuAdmin(admin.ModelAdmin):
         'purchase_date',
     )
     readonly_fields = ('catalog_number',)
+
+
+@admin.register(Manufacturer)
+class ManufacturerAdmin(admin.ModelAdmin):
+    pass

@@ -3,8 +3,8 @@
   <div class="product-card">
     <div class="product-thumb card">
       <a href="{% url 'cpus:cpu_detail' cpu.id %}">
-        {% if cpu.images.all %}
-          <img src="{{ cpu.images.first.image.url }}"> 
+        {% if cpu.default_image %}
+          <img src="{{ cpu.default_image.image.url }}"> 
         {% else %}
           <img src="{% static 'img/nocpu.jpg' %}">
         {% endif %}
