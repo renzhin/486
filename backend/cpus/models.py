@@ -255,3 +255,16 @@ class ImageCpu(models.Model):
         verbose_name='фото процессора',
     )
     default = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        # Проверяем, есть ли уже у этого процессора изображение с default=True
+        existing_default_image = ImageCpu.objects.filter(
+            cpu=self.cpu,
+            default=True
+        ).first()
+        if existing_default_image and self.default:
+            # Если такое изображение существует и default=True,
+            # то сбрасываем default на False у существующего изображения
+            existing_default_image.default = False
+            existing_default_image.save()
+        super().save(*args, **kwargs)
