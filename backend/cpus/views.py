@@ -79,6 +79,12 @@ def user_cpus(request, pk):
     cpus_list = Cpu.objects.filter(
         user=user.id
     )
+    for cpu in cpus_list:
+        # Ищем изображение по умолчанию для текущего процессора
+        default_image = cpu.images.filter(default=True).first()
+        # Добавляем найденное изображение
+        # как атрибут default_image к текущему объекту Cpu
+        cpu.default_image = default_image
     context = {
         'user': user,
         'cpus_list': cpus_list,

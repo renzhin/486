@@ -4,9 +4,9 @@
     <div class="row g-0">
       <div class="product-thumb card col-sm-4">
         {% if user.avatar %}
-          <img src="{{ user.avatar.url }}" class="img-fluid rounded-start"> 
+          <img src="{{ user.avatar.url }}" class="img-fluid rounded-start image-user-card"> 
         {% else %}
-          <img src="{% static 'img/nouser.jpg' %}" class="img-fluid rounded-start">
+          <img src="{% static 'img/nouser.jpg' %}" class="img-fluid rounded-start image-user-card">
         {% endif %}
       </div>
       <div class="col-sm-8">

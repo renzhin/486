@@ -179,3 +179,7 @@ a.hover {
 .image-detail-gal {
     max-width: 30%;
 }
+
+.image-user-card {
+    max-height: 250px;
+}
