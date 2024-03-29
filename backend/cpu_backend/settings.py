@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cpus.apps.CpusConfig',
     'users.apps.UsersConfig',
+    'carousel.apps.CarouselConfig',
 ]
 
 MIDDLEWARE = [
