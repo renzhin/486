@@ -5,10 +5,13 @@ from django.utils.timezone import make_aware
 from django.shortcuts import get_object_or_404, render
 
 from cpus.models import Cpu, ImageCpu, User
+from carousel.models import Carousel
 
 
 def index(request):
     template_name = 'cpus/index.html'
+
+    banners = Carousel.objects.all()
     users_list = User.objects.all().annotate(
         cpu_count=Count('cpus')
     ).order_by(
@@ -28,6 +31,7 @@ def index(request):
     )
 
     context = {
+        'banners': banners,
         'users_list': users_list,
         'all_cpus': all_cpus,
         'month_cpus': month_cpus,
@@ -38,7 +42,11 @@ def index(request):
 
 def about(request):
     template_name = 'cpus/about.html'
-    return render(request, template_name)
+    banners = Carousel.objects.all()
+    context = {
+        'banners': banners,
+    }
+    return render(request, template_name, context)
 
 
 def cpus_list(request):
