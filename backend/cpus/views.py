@@ -8,6 +8,16 @@ from cpus.models import Cpu, ImageCpu, User
 from carousel.models import Carousel
 
 
+def suffiks(obj_count):
+    if obj_count == 1:
+        suff = ''
+    elif 1 < obj_count < 5:
+        suff = 'а'
+    else:
+        suff = 'ов'
+    return suff
+
+
 def index(request):
     template_name = 'cpus/index.html'
 
@@ -17,6 +27,9 @@ def index(request):
     ).order_by(
         '-cpu_count'
     )
+    cpu_count = Cpu.objects.count()
+    cpu_count_suff = suffiks(cpu_count)
+    user_count_suff = suffiks(users_list.count())
     all_cpus = Cpu.objects.all()
 
     today = datetime.datetime.today()
@@ -31,6 +44,8 @@ def index(request):
     )
 
     context = {
+        'cpu_count_suff': cpu_count_suff,
+        'user_count_suff': user_count_suff,
         'banners': banners,
         'users_list': users_list,
         'all_cpus': all_cpus,
