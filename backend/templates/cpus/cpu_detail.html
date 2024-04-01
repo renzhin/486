@@ -101,7 +101,7 @@
             {% if not image.default %}
               <!-- Выводите остальные изображения -->
               <a href="{{ image.image.url }}" target="_blank">
-                <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="">
+                <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}">
               </a>
             {% endif %}
           {% endfor %}

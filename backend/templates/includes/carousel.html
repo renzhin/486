@@ -6,9 +6,9 @@
 
         {% for i in banners %}
           {% if forloop.first %}
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true" aria-label="Slide {{ forloop.counter0 }}"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true" aria-label="Слайд {{ forloop.counter0 }}"></button>
           {% else %}
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" aria-label="Slide {{ forloop.counter0 }}"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter0 }}"></button>
           {% endif %}
         {% endfor %}
 
@@ -17,11 +17,11 @@
         {% for banner in banners %}
           {% if forloop.first %}
             <div class="carousel-item active">
-              <img src="{{ banner.banner.url }}" class="d-block w-100">
+              <img src="{{ banner.banner.url }}" class="d-block w-100" alt="{{ banner.name }}">
             </div>
           {% else %}
             <div class="carousel-item">
-              <img src="{{ banner.banner.url }}" class="d-block w-100">
+              <img src="{{ banner.banner.url }}" class="d-block w-100" alt="{{ banner.name }}">
             </div>
           {% endif %}
         {% endfor %}
