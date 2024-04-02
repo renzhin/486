@@ -218,6 +218,7 @@ class Cpu(BaseModel):
     )
 
     class Meta:
+        ordering = ('-purchase_date', '-created_at')
         verbose_name = 'процессор'
         verbose_name_plural = 'Процессоры'
         constraints = (

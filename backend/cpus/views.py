@@ -26,7 +26,7 @@ def index(request):
         cpu_count=Count('cpus')
     ).order_by(
         '-cpu_count'
-    )
+    )[0:3]
     cpu_count = Cpu.objects.count()
     cpu_count_suff = suffiks(cpu_count)
     user_count_suff = suffiks(users_list.count())
