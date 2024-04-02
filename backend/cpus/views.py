@@ -25,7 +25,7 @@ def index(request):
     users_list = User.objects.all().annotate(
         cpu_count=Count('cpus')
     ).order_by(
-        '-cpu_count'
+        '-cpu_count', '-registrated_at'
     )[0:3]
     cpu_count = Cpu.objects.count()
     cpu_count_suff = suffiks(cpu_count)
