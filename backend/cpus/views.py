@@ -76,7 +76,11 @@ def cpus_list(request):
 
     # Получаем все процессоры с выбранными полями и связанными изображениями
     cpus_list = Cpu.objects.all().prefetch_related(
-        Prefetch('images', queryset=ImageCpu.objects.filter(default=True), to_attr='default_image')
+        Prefetch(
+            'images',
+            queryset=ImageCpu.objects.filter(default=True),
+            to_attr='default_image'
+        )
     )
 
     context = {
