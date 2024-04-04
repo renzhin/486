@@ -19,8 +19,6 @@ def suffiks(obj_count):
 
 
 def index(request):
-    template_name = 'cpus/index.html'
-
     banners = Carousel.objects.all()
     users_list = User.objects.all().annotate(
         cpu_count=Count('cpus')
@@ -52,21 +50,22 @@ def index(request):
         'month_cpus': month_cpus,
         'interest_cpus': interest_cpus,
     }
+
+    template_name = 'cpus/index.html'
     return render(request, template_name, context)
 
 
 def about(request):
-    template_name = 'cpus/about.html'
     banners = Carousel.objects.all()
     context = {
         'banners': banners,
     }
+
+    template_name = 'cpus/about.html'
     return render(request, template_name, context)
 
 
 def cpus_list(request):
-    template_name = 'cpus/cpus_list.html'
-
     today = datetime.datetime.today()
     aware_today = make_aware(today)  # Присваиваем тайм зону
     month = aware_today - datetime.timedelta(days=3)
@@ -97,6 +96,8 @@ def cpus_list(request):
     context = {
         'cpus_list': cpus_list,
     }
+
+    template_name = 'cpus/cpus_list.html'
     return render(request, template_name, context)
 
 
@@ -127,6 +128,13 @@ def cpu_detail(request, pk):
 
 
 def user_cpus(request, pk):
+    today = datetime.datetime.today()
+    aware_today = make_aware(today)  # Присваиваем тайм зону
+    month = aware_today - datetime.timedelta(days=3)
+    month_cpus = Cpu.objects.filter(
+        created_at__range=(month, aware_today)
+    )
+
     user = User.objects.get(id=pk)
     cpus_list = Cpu.objects.filter(
         user=user.id
@@ -137,9 +145,14 @@ def user_cpus(request, pk):
             to_attr='default_image'
         )
     )
+    for cpu in cpus_list:
+        if cpu in month_cpus:
+            cpu.month_cpus = True
+
     context = {
         'user': user,
         'cpus_list': cpus_list,
     }
+
     template_name = 'cpus/user_cpus.html'
     return render(request, template_name, context)
