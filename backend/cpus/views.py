@@ -66,13 +66,21 @@ def about(request):
 
 def cpus_list(request):
     template_name = 'cpus/cpus_list.html'
+
+    today = datetime.datetime.today()
+    aware_today = make_aware(today)  # Присваиваем тайм зону
+    month = aware_today - datetime.timedelta(days=3)
+    month_cpus = Cpu.objects.filter(
+        created_at__range=(month, aware_today)
+    )
+
     # cpus_list = Cpu.objects.all()
     # for cpu in cpus_list:
     #     # Ищем изображение по умолчанию для текущего процессора
     #     default_image = cpu.images.filter(default=True).first()
     #     # Добавляем найденное изображение
     #     # как атрибут default_image к текущему объекту Cpu
-    #     cpu.default_image = default_image
+    #     = default_image
 
     # Получаем все процессоры с выбранными полями и связанными изображениями
     cpus_list = Cpu.objects.all().prefetch_related(
@@ -82,6 +90,9 @@ def cpus_list(request):
             to_attr='default_image'
         )
     )
+    for cpu in cpus_list:
+        if cpu in month_cpus:
+            cpu.month_cpus = True
 
     context = {
         'cpus_list': cpus_list,
@@ -90,6 +101,11 @@ def cpus_list(request):
 
 
 def cpu_detail(request, pk):
+
+    today = datetime.datetime.today()
+    aware_today = make_aware(today)  # Присваиваем тайм зону
+    month = aware_today - datetime.timedelta(days=3)
+
     cpu = get_object_or_404(
         Cpu,
         id=pk,
@@ -97,6 +113,10 @@ def cpu_detail(request, pk):
     cpu_images = ImageCpu.objects.filter(
         cpu__id=pk
     )
+
+    if cpu.created_at >= month:
+        cpu.month_cpus = True
+
     context = {
         'cpu': cpu,
         'cpu_images': cpu_images,

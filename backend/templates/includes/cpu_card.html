@@ -22,7 +22,14 @@
     </div>
     <div class="product-details">
       <div class="product-main-details">
-        <h4><a href="{% url 'cpus:cpu_detail' cpu.id %}">{{ cpu.part_number }} <span class="badge bg-secondary text-bg-secondary">New</span></a></h4>
+        <h4>
+          <a href="{% url 'cpus:cpu_detail' cpu.id %}">
+            {{ cpu.part_number }} 
+            {% if cpu.month_cpus %}
+              <span class="badge bg-secondary text-bg-secondary">Новый</span>
+            {% endif %}
+          </a>
+        </h4>
         <h6>В коллекции</strong> <a href="{% url 'cpus:user_cpus' cpu.user.id %}"><span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></a> с {{ cpu.purchase_date }}</h6>
         <div class="about"><span class="product-list">Производитель:</span> {{ cpu.manufacturer }}</div>
         <div class="about"><span class="product-list">Частота:</span> {{ cpu.frequency }} Мгц</div>
