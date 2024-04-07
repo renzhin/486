@@ -1,4 +1,5 @@
 {% load static %}
+{% with request.resolver_match.view_name as view_name %}
 <div class="col-xl-4 col-md-6 col-sm-12 mt-4">
   <div class="product-card">
     <div class="product-thumb card">
@@ -30,7 +31,12 @@
             {% endif %}
           </a>
         </h4>
-        <h6>В коллекции</strong> <a href="{% url 'cpus:user_cpus' cpu.user.id %}"><span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></a> с {{ cpu.purchase_date }}</h6>
+        <h6>В коллекции</strong> 
+          {% if 'cpus:cpus_list' == view_name %}
+            <a href="{% url 'cpus:user_cpus' cpu.user.id %}">
+            <span class="badge rounded-pill bg-primary text-bg-primary">@{{ cpu.user.username }}</span></a>
+          {% endif %}
+          с {{ cpu.purchase_date }}</h6>
         <div class="about"><span class="product-list">Производитель:</span> {{ cpu.manufacturer }}</div>
         <div class="about"><span class="product-list">Частота:</span> {{ cpu.frequency }} Мгц</div>
       </div>
@@ -44,3 +50,4 @@
     </div>
   </div>
 </div>
+{% endwith %}

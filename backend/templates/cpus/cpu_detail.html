@@ -97,16 +97,14 @@
             {% if image.default %}
               <!-- Выводите изображение с default=True -->
               <a href="{{ image.image.url }}" target="_blank">
-                <img src="{{ image.image.url }}">
-              </a>
+                <img src="{{ image.image.url }}"></a>
             {% endif %}
           {% endfor %}
           {% for image in cpu_images %}
             {% if not image.default %}
               <!-- Выводите остальные изображения -->
               <a href="{{ image.image.url }}" target="_blank">
-                <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}">
-              </a>
+                <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}"></a>
             {% endif %}
           {% endfor %}
         </div>

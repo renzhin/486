@@ -6,9 +6,13 @@ from django.shortcuts import get_object_or_404, render
 
 from cpus.models import Cpu, ImageCpu, User
 from carousel.models import Carousel
+from cpu_backend.constants import (
+    DAYS_INTERVAL,
+)
 
 
 def suffiks(obj_count):
+    """Подстановка суффиксов согласно числу"""
     if obj_count == 1:
         suff = ''
     elif 1 < obj_count < 5:
@@ -16,6 +20,20 @@ def suffiks(obj_count):
     else:
         suff = 'ов'
     return suff
+
+
+def interval_cpus(days):
+    """
+    Вычисление даты интервала
+    и соответствующие ей добавленных процессоров
+    """
+    today = datetime.datetime.today()
+    aware_today = make_aware(today)  # Присваиваем тайм зону
+    interval_date = aware_today - datetime.timedelta(days=days)
+    interval_cpus = Cpu.objects.filter(
+        created_at__range=(interval_date, aware_today)
+    )
+    return [interval_cpus, interval_date]
 
 
 def index(request):
@@ -29,14 +47,7 @@ def index(request):
     cpu_count_suff = suffiks(cpu_count)
     user_count_suff = suffiks(users_list.count())
     all_cpus = Cpu.objects.all()
-
-    today = datetime.datetime.today()
-    aware_today = make_aware(today)  # Присваиваем тайм зону
-    month = aware_today - datetime.timedelta(days=30)
-
-    month_cpus = Cpu.objects.filter(
-        created_at__range=(month, aware_today)
-    )
+    month_cpus = interval_cpus(DAYS_INTERVAL)[0]
     interest_cpus = Cpu.objects.filter(
         in_interesting=True
     )
@@ -66,12 +77,7 @@ def about(request):
 
 
 def cpus_list(request):
-    today = datetime.datetime.today()
-    aware_today = make_aware(today)  # Присваиваем тайм зону
-    month = aware_today - datetime.timedelta(days=3)
-    month_cpus = Cpu.objects.filter(
-        created_at__range=(month, aware_today)
-    )
+    month_cpus = interval_cpus(DAYS_INTERVAL)[0]
 
     # cpus_list = Cpu.objects.all()
     # for cpu in cpus_list:
@@ -102,10 +108,7 @@ def cpus_list(request):
 
 
 def cpu_detail(request, pk):
-
-    today = datetime.datetime.today()
-    aware_today = make_aware(today)  # Присваиваем тайм зону
-    month = aware_today - datetime.timedelta(days=3)
+    interval_date = interval_cpus(DAYS_INTERVAL)[1]
 
     cpu = get_object_or_404(
         Cpu,
@@ -115,7 +118,7 @@ def cpu_detail(request, pk):
         cpu__id=pk
     )
 
-    if cpu.created_at >= month:
+    if cpu.created_at >= interval_date:
         cpu.month_cpus = True
 
     context = {
