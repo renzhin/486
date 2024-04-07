@@ -60,6 +60,7 @@ def index(request):
         'all_cpus': all_cpus,
         'month_cpus': month_cpus,
         'interest_cpus': interest_cpus,
+        'days_interval': DAYS_INTERVAL,
     }
 
     template_name = 'cpus/index.html'

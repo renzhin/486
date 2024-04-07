@@ -20,7 +20,7 @@
             <li><a href="{% url 'cpus:cpus_list' %}">{{ all_cpus.count }} процессор{{ cpu_count_suff }}</a></li>
           </ul>
 
-          <h4>CPU за последние 30 дней <span class="badge bg-secondary text-bg-secondary">Новый</span></h4>
+          <h4>CPU за последние {{ days_interval }} дней <span class="badge bg-secondary text-bg-secondary">Новый</span></h4>
           <ul class="list-unstyled">
             {% for cpu in month_cpus %}
               <!-- Карточка -->
