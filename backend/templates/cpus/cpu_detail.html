@@ -34,26 +34,34 @@
                 <th scope="row">Частота</th>
                 <td>{{ cpu.frequency }} Мгц</td>
               </tr>
+              {% if cpu.fsb %}
               <tr>
                 <th scope="row">Частота шины</th>
                 <td>{{ cpu.fsb }} Мгц</td>
               </tr>
+              {% endif %}
+              {% if cpu.multiplier %}
               <tr>
                 <th scope="row">Множитель</th>
                 <td>{{ cpu.multiplier }}</td>
               </tr>
+              {% endif %}
               <tr>
                 <th scope="row">Сопроцессор</th>
                 <td>{{ cpu.fpu|yesno:"Есть,Отсутствует" }}</td>
               </tr>
+              {% if cpu.l1_cache_size %}
               <tr>
                 <th scope="row">Кэш L1</th>
                 <td>{{ cpu.l1_cache_size }} Кб</td>
               </tr>
+              {% endif %}
+              {% if cpu.vcore %}
               <tr>
                 <th scope="row">Напряжение ядра</th>
                 <td>{{ cpu.vcore }} В</td>
               </tr>
+              {% endif %}
             </tbody>
           </table>
           <br>
@@ -71,25 +79,32 @@
 
           <table class="table table-sm">
             <tbody class="table-group-divider">
+              {% if cpu.overclk_frequency %}
               <tr>
                 <th scope="row">Частота в разгоне</th>
                 <td>{{ cpu.overclk_frequency }} Мгц</td>
               </tr>
+              {% endif %} 
+              {% if cpu.overclk_fsb %}
               <tr>
                 <th scope="row">Частота шины в разгоне</th>
                 <td>{{ cpu.overclk_fsb }} Мгц</td>
               </tr>
+              {% endif %}
+              {% if cpu.overclk_multiplier %}
               <tr>
                 <th scope="row">Множитель в разгоне</th>
                 <td>{{ cpu.overclk_multiplier }}</td>
               </tr>
+              {% endif %}
             </tbody>
           </table>
-
+          {% if cpu.description %}
           <br>
           <p>
             {{ cpu.description }}
           </p>
+          {% endif %}
         </div>
         
         <div class="col-xl-6 col-md-5">
