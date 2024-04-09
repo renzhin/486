@@ -108,22 +108,55 @@
         </div>
         
         <div class="col-xl-6 col-md-5">
+
           {% for image in cpu_images %}
             {% if image.default %}
-              <!-- Выводите изображение с default=True -->
-              <a href="{{ image.image.url }}" target="_blank">
-                <img src="{{ image.image.url }}"></a>
+              <!-- Выводим остальные изображения -->
+              <!-- URL trigger modal -->
+              <a href="" data-bs-toggle="modal" data-bs-target="#Modal{{ image.id }}">
+                <img src="{{ image.image.url }}" alt="Процессор {{ cpu.part_number }}"></a>
+              <!-- Modal -->
+              <div class="modal fade" id="Modal{{ image.id }}" tabindex="-1" aria-labelledby="ModalLabel{{ image.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-fullscreen-lg-down">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="ModalLabel{{ image.id }}">Процессор {{ cpu.part_number }}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img class="image-modal" style="max-width: 100%" src="{{ image.image.url }}" alt="Процессор {{ cpu.part_number }}">
+                    </div>
+                  </div>
+                </div>
+              </div>
             {% endif %}
           {% endfor %}
+
+
           {% for image in cpu_images %}
             {% if not image.default %}
-              <!-- Выводите остальные изображения -->
-              <a href="{{ image.image.url }}" target="_blank">
+              <!-- Выводим остальные изображения -->
+              <!-- URL trigger modal -->
+              <a href="" data-bs-toggle="modal" data-bs-target="#Modal{{ image.id }}">
                 <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}"></a>
+              <!-- Modal -->
+              <div class="modal fade" id="Modal{{ image.id }}" tabindex="-1" aria-labelledby="ModalLabel{{ image.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-fullscreen-lg-down">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="ModalLabel{{ image.id }}">Процессор {{ cpu.part_number }}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <img class="image-modal" style="max-width: 100%" src="{{ image.image.url }}" alt="Процессор {{ cpu.part_number }}">
+                    </div>
+                  </div>
+                </div>
+              </div>
             {% endif %}
           {% endfor %}
+
         </div>
-        
       </div>
     </div>
   </section>

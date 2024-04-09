@@ -183,3 +183,7 @@ a.hover {
 .image-user-card {
     max-height: 250px;
 }
+
+.image-modal {
+    max-width: 100%;
+}
