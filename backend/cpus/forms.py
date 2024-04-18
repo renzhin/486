@@ -3,6 +3,7 @@ from django import forms
 from cpu_backend.constants import (
     NAME_SHORT_NUMBCHAR,
 )
+from .models import Cpu
 
 
 class CpuForm(forms.Form):
@@ -15,9 +16,11 @@ class CpuForm(forms.Form):
         required=False
     )
     work_status = forms.ChoiceField(
+        choices=[('', 'Все')] + Cpu.STATUS_CHOICES,
         label='Статус*'
     )
     rarity = forms.ChoiceField(
+        choices=[('', 'Все')] + Cpu.RARITY_CHOICES,
         label='Редкость*'
     )
     manufacturer = forms.CharField(
@@ -54,7 +57,8 @@ class CpuForm(forms.Form):
         label='Напряжение ядра'
     )
     purchase_date = forms.DateField(
-        label='Дата покупки*'
+        label='Дата покупки*',
+        widget=forms.DateInput(attrs={'type': 'date'})
     )
     purchase_price = forms.IntegerField(
         required=False,
@@ -63,7 +67,8 @@ class CpuForm(forms.Form):
     )
     sale_date = forms.DateField(
         required=False,
-        label='Дата продажи'
+        label='Дата продажи',
+        widget=forms.DateInput(attrs={'type': 'date'})
     )
     sale_price = forms.IntegerField(
         required=False,
