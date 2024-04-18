@@ -164,6 +164,8 @@ def user_cpus(request, pk):
 
 
 def cpu_add(request):
-    form = CpuForm()
+    form = CpuForm(request.POST or None)
     context = {'form': form}
+    if form.is_valid():
+        form.save()
     return render(request, 'cpus/cpu_add.html', context)
