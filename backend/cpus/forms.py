@@ -6,20 +6,67 @@ from cpu_backend.constants import (
 
 
 class CpuForm(forms.Form):
-    part_number = forms.CharField(max_length=NAME_SHORT_NUMBCHAR)
-    # description = forms.CharField(required=False)
-    work_status = forms.CharField()
-    rarity = forms.CharField()
-    manufacturer = forms.CharField()
-    family = forms.CharField()
-    frequency = forms.PositiveIntegerField()
-    # fsb = PositiveIntegerField(required=False)
-    # multiplier = PositiveIntegerField(required=False)
-    fpu = BooleanField(required=False)
-    # l1_cache_size = PositiveIntegerField(required=False)
-    # vcore = FloatField(required=False)
-    purchase_date = forms.DateField()
-    purchase_price = PositiveIntegerField(required=False)
-    sale_date = forms.DateField()
-    # sale_price = PositiveIntegerField(required=False)
-    # sale_date = forms.DateField(required=False)
+    part_number = forms.CharField(
+        label='Серийный номер*',
+        max_length=NAME_SHORT_NUMBCHAR
+    )
+    description = forms.CharField(
+        label='Описание',
+        required=False
+    )
+    work_status = forms.ChoiceField(
+        label='Статус*'
+    )
+    rarity = forms.ChoiceField(
+        label='Редкость*'
+    )
+    manufacturer = forms.CharField(
+        label='Производитель*'
+    )
+    family = forms.CharField(
+        label='Семейство*'
+    )
+    frequency = forms.IntegerField(
+        min_value=1,
+        label='Частота процессора*'
+    )
+    fsb = forms.IntegerField(
+        required=False,
+        min_value=1,
+        label='Частота шины'
+    )
+    multiplier = forms.IntegerField(
+        required=False,
+        min_value=1,
+        label='Множитель'
+    )
+    fpu = forms.BooleanField(
+        required=False,
+        label='Сопроцессор (FPU)'
+    )
+    l1_cache_size = forms.IntegerField(
+        required=False,
+        min_value=1,
+        label='Кеш L1'
+    )
+    vcore = forms.FloatField(
+        required=False,
+        label='Напряжение ядра'
+    )
+    purchase_date = forms.DateField(
+        label='Дата покупки*'
+    )
+    purchase_price = forms.IntegerField(
+        required=False,
+        min_value=0,
+        label='Стоимость покупки'
+    )
+    sale_date = forms.DateField(
+        required=False,
+        label='Дата продажи'
+    )
+    sale_price = forms.IntegerField(
+        required=False,
+        min_value=0,
+        label='Стоимость продажи'
+    )
