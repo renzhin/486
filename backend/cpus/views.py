@@ -5,6 +5,7 @@ from django.utils.timezone import make_aware
 from django.shortcuts import get_object_or_404, render
 
 from cpus.models import Cpu, ImageCpu, User
+from cpus.forms import CpuForm
 from carousel.models import Carousel
 from cpu_backend.constants import (
     DAYS_INTERVAL,
@@ -160,3 +161,9 @@ def user_cpus(request, pk):
 
     template_name = 'cpus/user_cpus.html'
     return render(request, template_name, context)
+
+
+def cpu_add(request):
+    form = CpuForm()
+    context = {'form': form}
+    return render(request, 'cpus/cpu_add.html', context)
