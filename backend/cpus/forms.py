@@ -14,7 +14,7 @@ class CpuForm(forms.ModelForm):
     # )
     work_status = forms.ChoiceField(
         choices=[('', 'Все')] + Cpu.STATUS_CHOICES,
-        label='Статус*'
+        label='Статус*',
     )
     rarity = forms.ChoiceField(
         choices=[('', 'Все')] + Cpu.RARITY_CHOICES,
@@ -23,9 +23,9 @@ class CpuForm(forms.ModelForm):
     # manufacturer = forms.CharField(
     #     label='Производитель*'
     # )
-    family = forms.CharField(
-        label='Семейство*'
-    )
+    # family = forms.CharField(
+    #     label='Семейство*'
+    # )
     # frequency = forms.IntegerField(
     #     min_value=1,
     #     label='Частота процессора*'
@@ -56,6 +56,9 @@ class CpuForm(forms.ModelForm):
     # purchase_date = forms.DateField(
     #     label='Дата покупки*',
     #     widget=forms.DateInput(attrs={'type': 'date'})
+    # purchase_date = forms.DateField(
+    #     widget=forms.DateInput(
+    # format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date'}),
     # )
     # purchase_price = forms.IntegerField(
     #     required=False,
@@ -78,6 +81,12 @@ class CpuForm(forms.ModelForm):
         exclude = ('catalog_number',)
 
         widgets = {
-            'purchase_date': forms.DateInput(attrs={'type': 'date'}),
-            'sale_date': forms.DateInput(attrs={'type': 'date'})
+            'purchase_date': forms.DateInput(
+                format='%Y-%m-%d',
+                attrs={'class': 'form-control', 'type': 'date'}
+            ),
+            'sale_date': forms.DateInput(
+                format='%Y-%m-%d',
+                attrs={'class': 'form-control', 'type': 'date'}
+            )
         }

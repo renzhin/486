@@ -171,8 +171,9 @@ def cpu_add(request):
     return render(request, 'cpus/cpu_add.html', context)
 
 
-def cpu_edit(request):
-    form = CpuForm(request.POST or None)
+def cpu_edit(request, pk):
+    instance = get_object_or_404(Cpu, id=pk)
+    form = CpuForm(request.POST or None, instance=instance)
     context = {'form': form}
     if form.is_valid():
         form.save()
