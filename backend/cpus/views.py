@@ -169,3 +169,11 @@ def cpu_add(request):
     if form.is_valid():
         form.save()
     return render(request, 'cpus/cpu_add.html', context)
+
+
+def cpu_edit(request):
+    form = CpuForm(request.POST or None)
+    context = {'form': form}
+    if form.is_valid():
+        form.save()
+    return render(request, 'cpus/cpu_add.html', context)

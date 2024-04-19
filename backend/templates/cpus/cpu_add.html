@@ -1,4 +1,4 @@
-<!-- about.html --> 
+<!-- cpu_add.html --> 
 {% extends "base.html" %}
 {% block title %}Коллекция 486. Добавить процессор.{% endblock %}
 {% block content %}
@@ -12,7 +12,10 @@
       </table>
       <input type="submit" value="Отправить">
     </form>
-    {% with data=request.POST %}
+    {% with data=form.instance %}
+      {% if form.is_valid %}
+        <p>ID новой записи в БД: {{ data.id }}</p>
+      {% endif %}
     {% endwith %}
   </div>
 </section>

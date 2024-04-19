@@ -11,4 +11,5 @@ urlpatterns = [
     path('cpu_detail/<int:pk>/', views.cpu_detail, name='cpu_detail'),
     path('user_cpus/<int:pk>/', views.user_cpus, name='user_cpus'),
     path('cpu_add', views.cpu_add, name='cpu_add'),
+    path('cpu_detail/<int:pk>/edit/', views.cpu_edit, name='cpu_edit'),
 ]
