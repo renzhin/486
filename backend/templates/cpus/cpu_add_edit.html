@@ -1,32 +1,44 @@
-<!-- cpu_add.html --> 
+<!-- cpu_add_edit.html --> 
 {% extends "base.html" %}
 {% block title %}
+{% with data=form.instance %}
   {% if '/edit/' in request.path %}
-    Коллекция 486. Изменить процессор.
+    Коллекция 486. Изменить процессор {{ data.part_number }}.
+  {% elif '/delete/' in request.path %}
+    Коллекция 486. Удалить процессор {{ data.part_number }}.
   {% else %}
     Коллекция 486. Добавить процессор.
   {% endif %}
+{% endwith %}
 {% endblock %}
 {% block content %}
-<section class="main-content">
-  <div class="container">
-    {% if '/edit/' in request.path %}
-      <h1>Изменить процессор</h1>
-    {% else %}
-      <h1>Добавить процессор</h1>
-    {% endif %}
-    <form method="post"> 
-      {% csrf_token %}
-      <table>
-       {{ form }}
-      </table>
-      <input type="submit" value="Отправить">
-    </form>
-    {% with data=form.instance %}
-      {% if form.is_valid %}
-        <p>ID новой записи в БД: {{ data.id }}</p>
+{% with data=form.instance %}
+  <section class="main-content">
+    <div class="container">
+      {% if '/edit/' in request.path %}
+        <h1>Изменить процессор {{ data.part_number }}</h1>
+      {% elif '/delete/' in request.path %}
+        <h1>Удалить процессор {{ data.part_number }}</h1>
+      {% else %}
+        <h1>Добавить процессор</h1>
       {% endif %}
-    {% endwith %}
-  </div>
-</section>
+      
+      <form method="post"> 
+        {% csrf_token %}
+        <table>
+        {% if not "/delete/" in request.path %}
+          {{ form }}
+        {% else %}
+          <p>Коллекционер: {{ data.user }}</p>
+          <p><img src="{{ cpu_images.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}"></p>
+        {% endif %}
+        </table>
+        <input type="submit" value="Отправить">
+      </form>
+        {% if form.is_valid %}
+          <p>ID новой записи в БД: {{ data.part_number }}</p>
+        {% endif %}
+    </div>
+  </section>
+  {% endwith %}
 {% endblock %}

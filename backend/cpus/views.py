@@ -2,7 +2,7 @@ import datetime
 
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 from cpus.models import Cpu, ImageCpu, User
 from cpus.forms import CpuForm
@@ -172,4 +172,20 @@ def cpu_add_edit(request, pk=None):
     context = {'form': form}
     if form.is_valid():
         form.save()
+    return render(request, 'cpus/cpu_add_edit.html', context)
+
+
+def cpu_delete(request, pk):
+    instance = get_object_or_404(Cpu, id=pk)
+    cpu_images = ImageCpu.objects.filter(
+        cpu__id=pk, default=True
+    ).first()
+    form = CpuForm(instance=instance)
+    context = {
+        'form': form,
+        'cpu_images': cpu_images,
+    }
+    if request.method == 'POST':
+        instance.delete()
+        return redirect('cpus:index')
     return render(request, 'cpus/cpu_add_edit.html', context)

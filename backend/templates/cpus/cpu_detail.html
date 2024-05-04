@@ -12,7 +12,8 @@
         <div class="col-xl-6 col-md-7">
 
           <h2>{{ cpu.part_number }}</h2>
-          <a href="{% url 'cpus:cpu_edit' cpu.id %}">Изменить запись</a>
+          <a href="{% url 'cpus:cpu_edit' cpu.id %}">Изменить процессор</a>
+          <a href="{% url 'cpus:cpu_delete' cpu.id %}">Удалить процессор</a>
             <div class="cpu_badges">
               <span class="badge rounded-pill bg-danger text-bg-primary">
                 {{ cpu.get_rarity_display }}
