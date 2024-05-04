@@ -1,10 +1,20 @@
 <!-- cpu_add.html --> 
 {% extends "base.html" %}
-{% block title %}Коллекция 486. Добавить процессор.{% endblock %}
+{% block title %}
+  {% if '/edit/' in request.path %}
+    Коллекция 486. Изменить процессор.
+  {% else %}
+    Коллекция 486. Добавить процессор.
+  {% endif %}
+{% endblock %}
 {% block content %}
 <section class="main-content">
   <div class="container">
-    <h1>О проекте</h1>
+    {% if '/edit/' in request.path %}
+      <h1>Изменить процессор</h1>
+    {% else %}
+      <h1>Добавить процессор</h1>
+    {% endif %}
     <form method="post"> 
       {% csrf_token %}
       <table>

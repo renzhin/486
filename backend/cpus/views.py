@@ -163,18 +163,13 @@ def user_cpus(request, pk):
     return render(request, template_name, context)
 
 
-def cpu_add(request):
-    form = CpuForm(request.POST or None)
-    context = {'form': form}
-    if form.is_valid():
-        form.save()
-    return render(request, 'cpus/cpu_add.html', context)
-
-
-def cpu_edit(request, pk):
-    instance = get_object_or_404(Cpu, id=pk)
+def cpu_add_edit(request, pk=None):
+    if pk is not None:
+        instance = get_object_or_404(Cpu, id=pk)
+    else:
+        instance = None
     form = CpuForm(request.POST or None, instance=instance)
     context = {'form': form}
     if form.is_valid():
         form.save()
-    return render(request, 'cpus/cpu_add.html', context)
+    return render(request, 'cpus/cpu_add_edit.html', context)
