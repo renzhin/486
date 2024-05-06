@@ -23,11 +23,24 @@
         <h1>Добавить процессор</h1>
       {% endif %}
       
-      <form method="post"> 
+      <form method="post" enctype="multipart/form-data"> 
         {% csrf_token %}
+
         <table>
         {% if not "/delete/" in request.path %}
-          {{ form }}
+
+        {{ cpu_form.as_table }}
+        {% if cpu_form.instance.pk %}
+          <h4>Изображения процессора:</h4>
+          {% for image in cpu_form.instance.images.all %}
+            <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Изображение процессора">
+          {% endfor %}
+        {% endif %}
+        {{ image_formset.management_form }}
+        {% for image_form in image_formset %}
+          {{ image_form }}
+        {% endfor %}
+
         {% else %}
           <p>Коллекционер: {{ data.user }}</p>
           {% if cpu_images %}
@@ -35,8 +48,10 @@
           {% endif %}
         {% endif %}
         </table>
+
         <input type="submit" value="Отправить">
       </form>
+
         {% if form.is_valid %}
           <p>ID новой записи в БД: {{ data.part_number }}</p>
         {% endif %}

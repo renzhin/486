@@ -1,6 +1,15 @@
 from django import forms
+from django.forms.models import inlineformset_factory
 
-from .models import Cpu
+from .models import Cpu, ImageCpu
+
+# Создаем inline-форму для ImageCpu
+ImageCpuFormSet = inlineformset_factory(
+    Cpu,
+    ImageCpu,
+    fields=('name', 'image', 'default'),
+    extra=1
+)
 
 
 class CpuForm(forms.ModelForm):
