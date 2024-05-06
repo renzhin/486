@@ -6,6 +6,7 @@ from cpu_backend.constants import (
     NAME_SHORT_NUMBCHAR,
     CHOICE_NUMBCHAR,
 )
+from cpus.validators import real_date
 
 User = get_user_model()
 
@@ -186,7 +187,8 @@ class Cpu(BaseModel):
     )
 
     purchase_date = models.DateField(
-        verbose_name='дата покупки'
+        verbose_name='дата покупки',
+        validators=(real_date,)
     )
     purchase_price = models.PositiveIntegerField(
         validators=[MinValueValidator(1)],
@@ -204,6 +206,7 @@ class Cpu(BaseModel):
         verbose_name='дата продажи',
         blank=True,
         null=True,
+        validators=(real_date,)
     )
 
     is_published = models.BooleanField(

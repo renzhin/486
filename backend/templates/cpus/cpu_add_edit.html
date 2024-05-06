@@ -30,7 +30,9 @@
           {{ form }}
         {% else %}
           <p>Коллекционер: {{ data.user }}</p>
-          <p><img src="{{ cpu_images.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}"></p>
+          {% if cpu_images %}
+           <p><img src="{{ cpu_images.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}"></p>
+          {% endif %}
         {% endif %}
         </table>
         <input type="submit" value="Отправить">
