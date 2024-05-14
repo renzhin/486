@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
 from django.shortcuts import get_object_or_404, render, redirect
@@ -97,12 +98,15 @@ def cpus_list(request):
             to_attr='default_image'
         )
     )
-    for cpu in cpus_list:
+    paginator = Paginator(cpus_list, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    for cpu in page_obj:
         if cpu in month_cpus:
             cpu.month_cpus = True
 
     context = {
-        'cpus_list': cpus_list,
+        'page_obj': page_obj,
     }
 
     template_name = 'cpus/cpus_list.html'
