@@ -98,7 +98,7 @@ def cpus_list(request):
             to_attr='default_image'
         )
     )
-    paginator = Paginator(cpus_list, 3)
+    paginator = Paginator(cpus_list, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     for cpu in page_obj:
