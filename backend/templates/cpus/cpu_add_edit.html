@@ -1,0 +1,61 @@
+<!-- cpu_add_edit.html --> 
+{% extends "base.html" %}
+{% block title %}
+{% with data=form.instance %}
+  {% if '/edit/' in request.path %}
+    Коллекция 486. Изменить процессор {{ data.part_number }}.
+  {% elif '/delete/' in request.path %}
+    Коллекция 486. Удалить процессор {{ data.part_number }}.
+  {% else %}
+    Коллекция 486. Добавить процессор.
+  {% endif %}
+{% endwith %}
+{% endblock %}
+{% block content %}
+{% with data=form.instance %}
+  <section class="main-content">
+    <div class="container">
+      {% if '/edit/' in request.path %}
+        <h1>Изменить процессор {{ data.part_number }}</h1>
+      {% elif '/delete/' in request.path %}
+        <h1>Удалить процессор {{ data.part_number }}</h1>
+      {% else %}
+        <h1>Добавить процессор</h1>
+      {% endif %}
+      
+      <form method="post" enctype="multipart/form-data"> 
+        {% csrf_token %}
+
+        <table>
+        {% if not "/delete/" in request.path %}
+
+        {{ cpu_form.as_table }}
+        {% if cpu_form.instance.pk %}
+          <h4>Изображения процессора:</h4>
+          {% for image in cpu_form.instance.images.all %}
+            <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Изображение процессора">
+          {% endfor %}
+        {% endif %}
+        {{ image_formset.management_form }}
+        {% for image_form in image_formset %}
+          {{ image_form }}
+        {% endfor %}
+
+        {% else %}
+          <p>Коллекционер: {{ data.user }}</p>
+          {% if cpu_images %}
+           <p><img src="{{ cpu_images.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}"></p>
+          {% endif %}
+        {% endif %}
+        </table>
+
+        <input type="submit" value="Отправить">
+      </form>
+
+        {% if form.is_valid %}
+          <p>ID новой записи в БД: {{ data.part_number }}</p>
+        {% endif %}
+    </div>
+  </section>
+  {% endwith %}
+{% endblock %}

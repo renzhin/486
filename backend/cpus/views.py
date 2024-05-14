@@ -1,10 +1,12 @@
 import datetime
 
+from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 
 from cpus.models import Cpu, ImageCpu, User
+from cpus.forms import CpuForm, ImageCpuFormSet
 from carousel.models import Carousel
 from cpu_backend.constants import (
     DAYS_INTERVAL,
@@ -96,12 +98,15 @@ def cpus_list(request):
             to_attr='default_image'
         )
     )
-    for cpu in cpus_list:
+    paginator = Paginator(cpus_list, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    for cpu in page_obj:
         if cpu in month_cpus:
             cpu.month_cpus = True
 
     context = {
-        'cpus_list': cpus_list,
+        'page_obj': page_obj,
     }
 
     template_name = 'cpus/cpus_list.html'
@@ -160,3 +165,71 @@ def user_cpus(request, pk):
 
     template_name = 'cpus/user_cpus.html'
     return render(request, template_name, context)
+
+
+# def cpu_add_edit(request, pk=None):
+#     if pk is not None:
+#         instance = get_object_or_404(Cpu, id=pk)
+#     else:
+#         instance = None
+#     form = CpuForm(request.POST or None, instance=instance)
+#     context = {'form': form}
+#     if form.is_valid():
+#         form.save()
+#     return render(request, 'cpus/cpu_add_edit.html', context)
+
+
+# def cpu_delete(request, pk):
+#     instance = get_object_or_404(Cpu, id=pk)
+#     cpu_images = ImageCpu.objects.filter(
+#         cpu__id=pk, default=True
+#     ).first()
+#     form = CpuForm(instance=instance)
+#     context = {
+#         'form': form,
+#         'cpu_images': cpu_images,
+#     }
+#     if request.method == 'POST':
+#         instance.delete()
+#         return redirect('cpus:index')
+#     return render(request, 'cpus/cpu_add_edit.html', context)
+
+def cpu_add_edit(request, pk=None):
+    if pk is not None:
+        cpu_instance = get_object_or_404(Cpu, id=pk)
+    else:
+        cpu_instance = None
+
+    if request.method == 'POST':
+        cpu_form = CpuForm(request.POST, request.FILES, instance=cpu_instance)
+        image_formset = ImageCpuFormSet(
+            request.POST,
+            request.FILES,
+            instance=cpu_instance
+        )
+        if cpu_form.is_valid() and image_formset.is_valid():
+            cpu_instance = cpu_form.save()
+            image_formset.instance = cpu_instance
+            image_formset.save()
+            # Перенаправляем на страницу с деталями процессора
+            return redirect('cpus:cpu_detail', pk=cpu_instance.pk)
+    else:
+        cpu_form = CpuForm(instance=cpu_instance)
+        image_formset = ImageCpuFormSet(instance=cpu_instance)
+
+    context = {'cpu_form': cpu_form, 'image_formset': image_formset}
+    return render(request, 'cpus/cpu_add_edit.html', context)
+
+
+def cpu_delete(request, pk):
+    cpu_instance = get_object_or_404(Cpu, id=pk)
+    # Получаем изображения процессора
+    cpu_images = cpu_instance.images.filter(default=True).first()
+    if request.method == 'POST':
+        cpu_instance.delete()
+        return redirect('cpus:index')
+    return render(
+        request,
+        'cpus/cpu_add_edit.html',
+        {'cpu_instance': cpu_instance, 'cpu_images': cpu_images}
+    )

@@ -6,6 +6,7 @@ from cpu_backend.constants import (
     NAME_SHORT_NUMBCHAR,
     CHOICE_NUMBCHAR,
 )
+from cpus.validators import real_date
 
 User = get_user_model()
 
@@ -83,7 +84,7 @@ class Cpu(BaseModel):
         User,
         on_delete=models.CASCADE,
         related_name='cpus',
-        verbose_name='Владелец'
+        verbose_name='владелец'
     )
     part_number = models.CharField(
         max_length=NAME_SHORT_NUMBCHAR,
@@ -91,14 +92,14 @@ class Cpu(BaseModel):
     )
     catalog_number = models.CharField(
         max_length=4,
-        verbose_name='Номер в коллекции',
+        verbose_name='номер в коллекции',
         blank=True
     )
 
     description = models.TextField(
         blank=True,
         null=True,
-        verbose_name='Описание'
+        verbose_name='описание'
     )
     hidden_description = models.TextField(
         blank=True,
@@ -109,13 +110,13 @@ class Cpu(BaseModel):
         max_length=CHOICE_NUMBCHAR,
         choices=STATUS_CHOICES,
         default=NOTEST,
-        verbose_name='Статус'
+        verbose_name='статус'
     )
     rarity = models.CharField(
         max_length=CHOICE_NUMBCHAR,
         choices=RARITY_CHOICES,
         default=NONE,
-        verbose_name='Редкость'
+        verbose_name='редкость'
     )
     manufacturer = models.ForeignKey(
         Manufacturer,
@@ -186,17 +187,18 @@ class Cpu(BaseModel):
     )
 
     purchase_date = models.DateField(
-        verbose_name='дата покупки'
+        verbose_name='дата покупки',
+        validators=(real_date,)
     )
     purchase_price = models.PositiveIntegerField(
         validators=[MinValueValidator(1)],
-        verbose_name='Стоимость покупки',
+        verbose_name='стоимость покупки',
         blank=True,
         null=True,
     )
     sale_price = models.PositiveIntegerField(
         validators=[MinValueValidator(1)],
-        verbose_name='Стоимость продажи',
+        verbose_name='стоимость продажи',
         blank=True,
         null=True,
     )
@@ -204,11 +206,12 @@ class Cpu(BaseModel):
         verbose_name='дата продажи',
         blank=True,
         null=True,
+        validators=(real_date,)
     )
 
     is_published = models.BooleanField(
         default=True,
-        verbose_name='Опубликовано',
+        verbose_name='опубликовано',
         help_text='Снимите галочку, чтобы скрыть публикацию.'
     )
     in_interesting = models.BooleanField(

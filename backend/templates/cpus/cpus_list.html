@@ -7,11 +7,13 @@
     <div class="container">
       <h1>Каталог процессоров</h1>
       <div class="row">
-        {% for cpu in cpus_list %}
+        {% for cpu in page_obj %}
           <!-- Карточка -->
           {% include "includes/cpu_card.html" %} 
         {% endfor %}
       </div>
+      <!-- Подключаем пагинатор -->
+      {% include "includes/paginator.html" %}
     </div>
   </section>
 {% endblock %}
