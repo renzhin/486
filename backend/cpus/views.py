@@ -3,6 +3,8 @@ import datetime
 from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView
 from django.shortcuts import get_object_or_404, render, redirect
 
 from cpus.models import Cpu, ImageCpu, User
@@ -82,14 +84,6 @@ def about(request):
 def cpus_list(request):
     month_cpus = interval_cpus(DAYS_INTERVAL)[0]
 
-    # cpus_list = Cpu.objects.all()
-    # for cpu in cpus_list:
-    #     # Ищем изображение по умолчанию для текущего процессора
-    #     default_image = cpu.images.filter(default=True).first()
-    #     # Добавляем найденное изображение
-    #     # как атрибут default_image к текущему объекту Cpu
-    #     = default_image
-
     # Получаем все процессоры с выбранными полями и связанными изображениями
     cpus_list = Cpu.objects.all().prefetch_related(
         Prefetch(
@@ -167,33 +161,6 @@ def user_cpus(request, pk):
     return render(request, template_name, context)
 
 
-# def cpu_add_edit(request, pk=None):
-#     if pk is not None:
-#         instance = get_object_or_404(Cpu, id=pk)
-#     else:
-#         instance = None
-#     form = CpuForm(request.POST or None, instance=instance)
-#     context = {'form': form}
-#     if form.is_valid():
-#         form.save()
-#     return render(request, 'cpus/cpu_add_edit.html', context)
-
-
-# def cpu_delete(request, pk):
-#     instance = get_object_or_404(Cpu, id=pk)
-#     cpu_images = ImageCpu.objects.filter(
-#         cpu__id=pk, default=True
-#     ).first()
-#     form = CpuForm(instance=instance)
-#     context = {
-#         'form': form,
-#         'cpu_images': cpu_images,
-#     }
-#     if request.method == 'POST':
-#         instance.delete()
-#         return redirect('cpus:index')
-#     return render(request, 'cpus/cpu_add_edit.html', context)
-
 def cpu_add_edit(request, pk=None):
     if pk is not None:
         cpu_instance = get_object_or_404(Cpu, id=pk)
@@ -217,7 +184,10 @@ def cpu_add_edit(request, pk=None):
         cpu_form = CpuForm(instance=cpu_instance)
         image_formset = ImageCpuFormSet(instance=cpu_instance)
 
-    context = {'cpu_form': cpu_form, 'image_formset': image_formset}
+    context = {
+        'cpu_form': cpu_form,
+        'image_formset': image_formset
+    }
     return render(request, 'cpus/cpu_add_edit.html', context)
 
 
@@ -233,3 +203,10 @@ def cpu_delete(request, pk):
         'cpus/cpu_add_edit.html',
         {'cpu_instance': cpu_instance, 'cpu_images': cpu_images}
     )
+
+
+class CpuCreateView(CreateView):
+    model = Cpu
+    form_class = CpuForm
+    template_name = 'cpus/cpu_add_edit.html'
+    success_url = reverse_lazy('cpus:cpu_detail')

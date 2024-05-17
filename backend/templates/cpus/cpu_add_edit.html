@@ -29,7 +29,7 @@
         <table>
         {% if not "/delete/" in request.path %}
 
-        {{ cpu_form.as_table }}
+        {{ form.as_table }}
         {% if cpu_form.instance.pk %}
           <h4>Изображения процессора:</h4>
           {% for image in cpu_form.instance.images.all %}
@@ -52,9 +52,9 @@
         <input type="submit" value="Отправить">
       </form>
 
-        {% if form.is_valid %}
-          <p>ID новой записи в БД: {{ data.part_number }}</p>
-        {% endif %}
+      {% if form.is_valid %}
+        <p>ID новой записи в БД: {{ data.part_number }}</p>
+      {% endif %}
     </div>
   </section>
   {% endwith %}
