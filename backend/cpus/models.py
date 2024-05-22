@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.urls import reverse
 
 from cpu_backend.constants import (
     NAME_SHORT_NUMBCHAR,
@@ -236,6 +237,9 @@ class Cpu(BaseModel):
 
     def __str__(self):
         return self.part_number
+
+    def get_absolute_url(self):
+        return reverse('cpus:cpu_detail', kwargs={'pk': self.pk})
 
 
 class ImageCpu(models.Model):

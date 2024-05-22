@@ -3,8 +3,7 @@ import datetime
 from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView
 from django.shortcuts import get_object_or_404, render, redirect
 
 from cpus.models import Cpu, ImageCpu, User
@@ -209,4 +208,25 @@ class CpuCreateView(CreateView):
     model = Cpu
     form_class = CpuForm
     template_name = 'cpus/cpu_add_edit.html'
-    success_url = reverse_lazy('cpus:cpu_detail')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['image_formset'] = ImageCpuFormSet(
+                self.request.POST,
+                self.request.FILES
+            )
+        else:
+            data['image_formset'] = ImageCpuFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        image_formset = context['image_formset']
+        if image_formset.is_valid():
+            self.object = form.save()
+            image_formset.instance = self.object
+            image_formset.save()
+            return super().form_valid(form)
+        else:
+            return self.form_invalid(form)
