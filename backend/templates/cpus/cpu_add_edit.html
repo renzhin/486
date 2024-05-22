@@ -30,9 +30,9 @@
         {% if not "/delete/" in request.path %}
 
         {{ form.as_table }}
-        {% if cpu_form.instance.pk %}
+        {% if form.instance.pk %}
           <h4>Изображения процессора:</h4>
-          {% for image in cpu_form.instance.images.all %}
+          {% for image in form.instance.images.all %}
             <img src="{{ image.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Изображение процессора">
           {% endfor %}
         {% endif %}
