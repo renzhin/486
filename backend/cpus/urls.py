@@ -6,7 +6,8 @@ app_name = 'cpus'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('about/', views.about, name='about'),
+    # path('about/', views.about, name='about'),
+    path('about/', views.About.as_view(), name='about'),
     path('cpus_list/', views.cpus_list, name='cpus_list'),
     path('cpu_detail/<int:pk>/', views.cpu_detail, name='cpu_detail'),
     path('user_cpus/<int:pk>/', views.user_cpus, name='user_cpus'),

@@ -3,7 +3,11 @@ import datetime
 from django.core.paginator import Paginator
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import (
+    CreateView,
+    UpdateView,
+    TemplateView
+)
 from django.shortcuts import get_object_or_404, render, redirect
 
 from cpus.models import Cpu, ImageCpu, User
@@ -67,16 +71,6 @@ def index(request):
     }
 
     template_name = 'cpus/index.html'
-    return render(request, template_name, context)
-
-
-def about(request):
-    banners = Carousel.objects.all()
-    context = {
-        'banners': banners,
-    }
-
-    template_name = 'cpus/about.html'
     return render(request, template_name, context)
 
 
@@ -202,6 +196,15 @@ def cpu_delete(request, pk):
         'cpus/cpu_add_edit.html',
         {'cpu_instance': cpu_instance, 'cpu_images': cpu_images}
     )
+
+
+class About(TemplateView):
+    template_name = 'cpus/about.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['banners'] = Carousel.objects.all()
+        return data
 
 
 class CpuCreateView(CreateView):
