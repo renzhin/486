@@ -199,6 +199,9 @@ def cpu_delete(request, pk):
 
 
 class About(TemplateView):
+    """
+    Вью для страницы «О проекте»
+    """
     template_name = 'cpus/about.html'
 
     def get_context_data(self, **kwargs):
@@ -208,6 +211,9 @@ class About(TemplateView):
 
 
 class CpuCreateView(CreateView):
+    """
+    Вью для создания процессора
+    """
     model = Cpu
     form_class = CpuForm
     template_name = 'cpus/cpu_add_edit.html'
@@ -236,6 +242,9 @@ class CpuCreateView(CreateView):
 
 
 class CpuUpdateView(UpdateView):
+    """
+    Вью для редактирования процессора
+    """
     model = Cpu
     form_class = CpuForm
     template_name = 'cpus/cpu_add_edit.html'
