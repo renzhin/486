@@ -34,12 +34,19 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="far fa-user"></i></a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a class="dropdown-item" href="#">Авторизация</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Регистрация</a>
-              </li>
+              {% if user.is_authenticated %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+                  <a class="dropdown-item" href="{% url 'password_change' %}">Сменить пароль</a>
+                </li>
+              {% else %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'login' %}">Авторизация</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">Регистрация</a>
+                </li>
+              {% endif %}
             </ul>
           </li>
         </ul>

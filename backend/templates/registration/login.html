@@ -29,7 +29,9 @@
                 <!-- В атрибуте action указываем адрес, куда должен отправляться запрос. -->
                 <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
-                    {{ form.as_table }}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
                     <!-- В скрытом поле передаём параметр next, 
                     это URL для переадресации после логина. -->
                     <input type="submit" value="Войти">
