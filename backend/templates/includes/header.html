@@ -32,7 +32,11 @@
   
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><i class="far fa-user"></i></a>
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
+              {% if user.is_authenticated %}
+              {{ user }} &nbsp;
+              {% endif %}
+              <i class="far fa-user"></i></a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               {% if user.is_authenticated %}
                 <li>
@@ -44,7 +48,7 @@
                   <a class="dropdown-item" href="{% url 'login' %}">Авторизация</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#">Регистрация</a>
+                  <a class="dropdown-item" href="{% url 'registration' %}">Регистрация</a>
                 </li>
               {% endif %}
             </ul>
