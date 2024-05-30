@@ -1,6 +1,8 @@
 import datetime
 
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
 from django.views.generic import (
@@ -154,36 +156,7 @@ def user_cpus(request, pk):
     return render(request, template_name, context)
 
 
-def cpu_add_edit(request, pk=None):
-    if pk is not None:
-        cpu_instance = get_object_or_404(Cpu, id=pk)
-    else:
-        cpu_instance = None
-
-    if request.method == 'POST':
-        cpu_form = CpuForm(request.POST, request.FILES, instance=cpu_instance)
-        image_formset = ImageCpuFormSet(
-            request.POST,
-            request.FILES,
-            instance=cpu_instance
-        )
-        if cpu_form.is_valid() and image_formset.is_valid():
-            cpu_instance = cpu_form.save()
-            image_formset.instance = cpu_instance
-            image_formset.save()
-            # Перенаправляем на страницу с деталями процессора
-            return redirect('cpus:cpu_detail', pk=cpu_instance.pk)
-    else:
-        cpu_form = CpuForm(instance=cpu_instance)
-        image_formset = ImageCpuFormSet(instance=cpu_instance)
-
-    context = {
-        'cpu_form': cpu_form,
-        'image_formset': image_formset
-    }
-    return render(request, 'cpus/cpu_add_edit.html', context)
-
-
+@login_required
 def cpu_delete(request, pk):
     cpu_instance = get_object_or_404(Cpu, id=pk)
     # Получаем изображения процессора
@@ -210,7 +183,7 @@ class About(TemplateView):
         return data
 
 
-class CpuCreateView(CreateView):
+class CpuCreateView(LoginRequiredMixin, CreateView):
     """
     Вью для создания процессора
     """
@@ -241,7 +214,7 @@ class CpuCreateView(CreateView):
             return self.form_invalid(form)
 
 
-class CpuUpdateView(UpdateView):
+class CpuUpdateView(LoginRequiredMixin, UpdateView):
     """
     Вью для редактирования процессора
     """
