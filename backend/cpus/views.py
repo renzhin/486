@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -203,13 +204,29 @@ class CpuCreateView(LoginRequiredMixin, CreateView):
         return data
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
+
         context = self.get_context_data()
         image_formset = context['image_formset']
+
         if image_formset.is_valid():
             self.object = form.save()
             image_formset.instance = self.object
             image_formset.save()
+
+            # Отправка письма после успешного сохранения формы и формсета
+            part_number = self.object.part_number
+            user = self.object.user
+            send_mail(
+                subject='Добавление процессора на сайт 486.renzhin.ru',
+                message=f'{user} добавил процессор {part_number}',
+                from_email='noreplay@486.renzhin.ru',
+                recipient_list=['admin@486.renzhin.ru'],
+                fail_silently=True,
+            )
+
             return super().form_valid(form)
+
         else:
             return self.form_invalid(form)
 
