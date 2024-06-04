@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'cpus.apps.CpusConfig',
+    'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'carousel.apps.CarouselConfig',
 ]
