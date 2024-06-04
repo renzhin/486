@@ -266,6 +266,6 @@ class CpuUpdateView(LoginRequiredMixin, UpdateView):
     def dispatch(self, request, *args, **kwargs):
         instance = get_object_or_404(Cpu, pk=kwargs['pk'])
         if instance.user != request.user:
-            # Здесь может быть как вызов ошибки, так и редирект на нужную страницу.
+            # Здесь вызов ошибки, или редирект на нужную страницу.
             raise PermissionDenied
         return super().dispatch(request, *args, **kwargs)
