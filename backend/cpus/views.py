@@ -1,6 +1,7 @@
 import datetime
 
 from django.core.mail import send_mail
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -261,3 +262,10 @@ class CpuUpdateView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         else:
             return self.form_invalid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        instance = get_object_or_404(Cpu, pk=kwargs['pk'])
+        if instance.user != request.user:
+            # Здесь может быть как вызов ошибки, так и редирект на нужную страницу.
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
