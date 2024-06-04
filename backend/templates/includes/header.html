@@ -28,6 +28,13 @@
               О проекте
             </a>
           </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'cpus:cpu_add' %}active{% endif %}" href="{% url 'cpus:cpu_add' %}">
+                Добавить процессор
+              </a>
+            </li>
+          {% endif %}
         </ul>
   
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
