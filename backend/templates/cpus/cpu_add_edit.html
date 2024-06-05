@@ -5,7 +5,7 @@
   {% if '/edit/' in request.path %}
     Коллекция 486. Изменить процессор {{ data.part_number }}.
   {% elif '/delete/' in request.path %}
-    Коллекция 486. Удалить процессор {{ data.part_number }}.
+    Коллекция 486. Удалить процессор {{ cpu.part_number }}.
   {% else %}
     Коллекция 486. Добавить процессор.
   {% endif %}
@@ -18,7 +18,7 @@
       {% if '/edit/' in request.path %}
         <h1>Изменить процессор {{ data.part_number }}</h1>
       {% elif '/delete/' in request.path %}
-        <h1>Удалить процессор {{ data.part_number }}</h1>
+        <h1>Удалить процессор {{ cpu.part_number }}</h1>
       {% else %}
         <h1>Добавить процессор</h1>
       {% endif %}
@@ -42,7 +42,7 @@
         {% endfor %}
 
         {% else %}
-          <p>Коллекционер: {{ data.user }}</p>
+          <p>Коллекционер: {{ cpu.user }}</p>
           {% if cpu_images %}
            <p><img src="{{ cpu_images.image.url }}" class="mt-2 me-1 image-detail-gal" alt="Процессор {{ cpu.part_number }}"></p>
           {% endif %}

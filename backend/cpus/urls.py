@@ -24,9 +24,14 @@ urlpatterns = [
         views.CpuUpdateView.as_view(),
         name='cpu_edit',
     ),
+    # path(
+    #     'cpu_detail/<int:pk>/delete/',
+    #     views.cpu_delete,
+    #     name='cpu_delete'
+    # ),
     path(
         'cpu_detail/<int:pk>/delete/',
-        views.cpu_delete,
+        views.CpuDeleteView.as_view(),
         name='cpu_delete'
     ),
 ]

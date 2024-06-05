@@ -3,16 +3,19 @@ import datetime
 from django.core.mail import send_mail
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Prefetch
 from django.utils.timezone import make_aware
+from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     UpdateView,
+    DeleteView,
     TemplateView
 )
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render
+# from django.shortcuts import redirect
 
 from cpus.models import Cpu, ImageCpu, User
 from cpus.forms import CpuForm, ImageCpuFormSet
@@ -158,19 +161,22 @@ def user_cpus(request, pk):
     return render(request, template_name, context)
 
 
-@login_required
-def cpu_delete(request, pk):
-    cpu_instance = get_object_or_404(Cpu, id=pk)
-    # Получаем изображения процессора
-    cpu_images = cpu_instance.images.filter(default=True).first()
-    if request.method == 'POST':
-        cpu_instance.delete()
-        return redirect('cpus:index')
-    return render(
-        request,
-        'cpus/cpu_add_edit.html',
-        {'cpu_instance': cpu_instance, 'cpu_images': cpu_images}
-    )
+# @login_required
+# def cpu_delete(request, pk):
+#     cpu_instance = get_object_or_404(Cpu, id=pk)
+#     # Получаем изображения процессора
+#     cpu_images = cpu_instance.images.filter(default=True).first()
+#     if request.method == 'POST':
+#         cpu_instance.delete()
+#         return redirect('cpus:index')
+#     return render(
+#         request,
+#         'cpus/cpu_add_edit.html',
+#         {
+#             'cpu_instance': cpu_instance,
+#             'cpu_images': cpu_images,
+#         }
+#     )
 
 
 class About(TemplateView):
@@ -262,6 +268,27 @@ class CpuUpdateView(LoginRequiredMixin, UpdateView):
             return super().form_valid(form)
         else:
             return self.form_invalid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        instance = get_object_or_404(Cpu, pk=kwargs['pk'])
+        if instance.user != request.user:
+            # Здесь вызов ошибки, или редирект на нужную страницу.
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+
+class CpuDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    Вью для удаления процессора
+    """
+    model = Cpu
+    template_name = 'cpus/cpu_add_edit.html'
+    success_url = reverse_lazy('cpus:index')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['cpu_images'] = data['cpu'].images.filter(default=True).first()
+        return data
 
     def dispatch(self, request, *args, **kwargs):
         instance = get_object_or_404(Cpu, pk=kwargs['pk'])
