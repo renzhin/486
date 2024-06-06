@@ -152,11 +152,23 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Подключаем бэкенд filebased.EmailBackend:
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+if not DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-# Указываем директорию, в которую будут сохраняться файлы писем:
-EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+    EMAIL_HOST = 'EMAIL_HOST'
+    EMAIL_PORT = 'EMAIL_PORT'
+    EMAIL_HOST_USER = 'EMAIL_HOST_USER'
+    EMAIL_HOST_PASSWORD = 'EMAIL_HOST_PASSWORD'
+    EMAIL_USE_TLS = False
+    EMAIL_USE_SSL = True
+    SERVER_EMAIL = 'SERVER_EMAIL'
+    DEFAULT_FROM_EMAIL = 'DEFAULT_FROM_EMAIL'
+
+else:
+    # Подключаем бэкенд filebased.EmailBackend:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    # Указываем директорию, в которую будут сохраняться файлы писем:
+    EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
 
 LOGIN_REDIRECT_URL = 'cpus:index'
 LOGIN_URL = 'login'
