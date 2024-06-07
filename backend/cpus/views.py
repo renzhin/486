@@ -52,14 +52,15 @@ def interval_cpus(days):
 
 def index(request):
     banners = Carousel.objects.all()
-    users_list = User.objects.all().annotate(
+    users = User.objects.all()
+    users_list = users.annotate(
         cpu_count=Count('cpus')
     ).order_by(
         '-cpu_count', '-registrated_at'
     )[0:3]
     cpu_count = Cpu.objects.count()
     cpu_count_suff = suffiks(cpu_count)
-    user_count_suff = suffiks(users_list.count())
+    user_count_suff = suffiks(users.count())
     all_cpus = Cpu.objects.all()
     month_cpus = interval_cpus(DAYS_INTERVAL)[0]
     interest_cpus = Cpu.objects.filter(
@@ -70,6 +71,7 @@ def index(request):
         'cpu_count_suff': cpu_count_suff,
         'user_count_suff': user_count_suff,
         'banners': banners,
+        'users': users,
         'users_list': users_list,
         'all_cpus': all_cpus,
         'month_cpus': month_cpus,
@@ -159,24 +161,6 @@ def user_cpus(request, pk):
 
     template_name = 'cpus/user_cpus.html'
     return render(request, template_name, context)
-
-
-# @login_required
-# def cpu_delete(request, pk):
-#     cpu_instance = get_object_or_404(Cpu, id=pk)
-#     # Получаем изображения процессора
-#     cpu_images = cpu_instance.images.filter(default=True).first()
-#     if request.method == 'POST':
-#         cpu_instance.delete()
-#         return redirect('cpus:index')
-#     return render(
-#         request,
-#         'cpus/cpu_add_edit.html',
-#         {
-#             'cpu_instance': cpu_instance,
-#             'cpu_images': cpu_images,
-#         }
-#     )
 
 
 class About(TemplateView):
